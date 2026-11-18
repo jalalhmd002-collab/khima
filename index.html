@@ -361,7 +361,7 @@
           <h2 class="text-sm sm:text-base text-slate-900">لوحة التحكم</h2>
           <p class="text-xs text-slate-500">ملخص الإحصائيات والأنشطة الحديثة</p>
         </div>
-        <button type="button" id="printDashboardBtn" class="app-btn border border-slate-300 text-slate-700">طباعة</button>
+        <button type="button" id="printDashboardBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
       </div>
 
       <div id="dashboardPendingAlert" class="hidden admin-only bg-white/95 p-4 rounded-2xl border border-amber-300 border-t-4 border-t-amber-500 shadow-sm flex flex-wrap items-center justify-between gap-3">
@@ -1216,6 +1216,14 @@
       </div>
       <div id="adminActionsListContainer" class="space-y-3"></div>
       <div id="noAdminActionsMsg" class="hidden p-10 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا توجد حركات مسجلة للمديرين ضمن هذا النطاق.</div>
+      <div id="adminActionsPaginationBar" class="hidden no-print flex flex-wrap items-center justify-between gap-2 bg-white/90 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 shadow-sm text-xs">
+        <div id="adminActionsPaginationInfo" class="text-slate-600"></div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="adminActionsPrevPageBtn" class="app-btn-sm border border-slate-300 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed">السابق</button>
+          <span id="adminActionsPageStatus" class="text-slate-700 px-1 whitespace-nowrap"></span>
+          <button type="button" id="adminActionsNextPageBtn" class="app-btn-sm border border-indigo-500 text-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed">التالي</button>
+        </div>
+      </div>
     </section>
 
     <!-- TAB: EMPLOYEE MY REQUESTS -->
@@ -1309,6 +1317,14 @@
         </div>
       </div>
       <div id="noAuditMsg" class="hidden p-8 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا توجد حركات مسجلة في سجل الرقابة بعد.</div>
+      <div id="auditPaginationBar" class="hidden no-print flex flex-wrap items-center justify-between gap-2 bg-white/90 px-3.5 py-2.5 rounded-2xl border border-slate-200/80 shadow-sm text-xs">
+        <div id="auditPaginationInfo" class="text-slate-600"></div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="auditPrevPageBtn" class="app-btn-sm border border-slate-300 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed">السابق</button>
+          <span id="auditPageStatus" class="text-slate-700 px-1 whitespace-nowrap"></span>
+          <button type="button" id="auditNextPageBtn" class="app-btn-sm border border-rose-500 text-rose-700 disabled:opacity-40 disabled:cursor-not-allowed">التالي</button>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -2381,6 +2397,8 @@
         benViewMode: 'table',
         benCurrentPage: 1,      // Table priority!
         repCurrentPage: 1,
+        auditCurrentPage: 1,
+        adminActionsCurrentPage: 1,
         aidViewMode: 'table',      // Table priority!
         workshopViewMode: 'table', // Table priority!
         reportViewMode: 'table',   // Table priority!
@@ -2947,13 +2965,29 @@
           }
           return true;
         });
+        const pagBar = document.getElementById('adminActionsPaginationBar');
         if (!list.length) {
           container.innerHTML = '';
           noMsg.classList.remove('hidden');
+          if (pagBar) pagBar.classList.add('hidden');
           return;
         }
         noMsg.classList.add('hidden');
-        container.innerHTML = list.map(l => `
+        const PAGE_SIZE = 10;
+        const totalCount = list.length;
+        const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+        if (state.adminActionsCurrentPage > totalPages) state.adminActionsCurrentPage = totalPages;
+        if (state.adminActionsCurrentPage < 1) state.adminActionsCurrentPage = 1;
+        const startIdx = (state.adminActionsCurrentPage - 1) * PAGE_SIZE;
+        const pageList = list.slice(startIdx, startIdx + PAGE_SIZE);
+        if (pagBar) {
+          pagBar.classList.remove('hidden');
+          document.getElementById('adminActionsPaginationInfo').innerHTML = `عرض <span class="num-en">${startIdx + 1}-${startIdx + pageList.length}</span> من <span class="num-en">${totalCount}</span>`;
+          document.getElementById('adminActionsPageStatus').innerHTML = `صفحة <span class="num-en">${state.adminActionsCurrentPage}</span> من <span class="num-en">${totalPages}</span>`;
+          document.getElementById('adminActionsPrevPageBtn').disabled = state.adminActionsCurrentPage <= 1;
+          document.getElementById('adminActionsNextPageBtn').disabled = state.adminActionsCurrentPage >= totalPages;
+        }
+        container.innerHTML = pageList.map(l => `
           <div class="bg-white p-3.5 rounded-2xl border border-slate-200 border-t-4 border-t-indigo-500 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
             <div class="space-y-1">
               <div class="flex flex-wrap items-center gap-2">
@@ -3457,15 +3491,31 @@
           if (!q) return true;
           return (l.actorName || '').toLowerCase().includes(q) || (l.summary || '').toLowerCase().includes(q) || (l.entityId || '').toLowerCase().includes(q);
         });
+        const pagBar = document.getElementById('auditPaginationBar');
         if (!list.length) {
           tbody.innerHTML = '';
           noMsg.classList.remove('hidden');
+          if (pagBar) pagBar.classList.add('hidden');
           return;
         }
         noMsg.classList.add('hidden');
-        tbody.innerHTML = list.slice(0, 200).map((l, idx) => `
+        const PAGE_SIZE = 10;
+        const totalCount = list.length;
+        const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+        if (state.auditCurrentPage > totalPages) state.auditCurrentPage = totalPages;
+        if (state.auditCurrentPage < 1) state.auditCurrentPage = 1;
+        const startIdx = (state.auditCurrentPage - 1) * PAGE_SIZE;
+        const pageList = list.slice(startIdx, startIdx + PAGE_SIZE);
+        if (pagBar) {
+          pagBar.classList.remove('hidden');
+          document.getElementById('auditPaginationInfo').innerHTML = `عرض <span class="num-en">${startIdx + 1}-${startIdx + pageList.length}</span> من <span class="num-en">${totalCount}</span>`;
+          document.getElementById('auditPageStatus').innerHTML = `صفحة <span class="num-en">${state.auditCurrentPage}</span> من <span class="num-en">${totalPages}</span>`;
+          document.getElementById('auditPrevPageBtn').disabled = state.auditCurrentPage <= 1;
+          document.getElementById('auditNextPageBtn').disabled = state.auditCurrentPage >= totalPages;
+        }
+        tbody.innerHTML = pageList.map((l, idx) => `
           <tr class="hover:bg-slate-50">
-            <td class="p-3 text-center num-en text-slate-500">${idx + 1}</td>
+            <td class="p-3 text-center num-en text-slate-500">${startIdx + idx + 1}</td>
             <td class="p-3 num-en text-slate-600">${escapeHtml(l.createdAt)}</td>
             <td class="p-3 text-slate-900">${escapeHtml(l.actorName)} <span class="text-[10px] text-slate-500">(${escapeHtml(l.actorRole)})</span></td>
             <td class="p-3"><span class="px-2 py-0.5 rounded-full border border-slate-300 text-slate-700 text-[11px]">${escapeHtml(l.actionType)}</span></td>
@@ -6299,8 +6349,10 @@
 
 
         document.getElementById('approvalsStatusFilter').addEventListener('change', renderApprovalsView);
-        document.getElementById('adminActionsTimeFilter').addEventListener('change', renderAdminActionsReportView);
-        document.getElementById('adminActionsSearchInput').addEventListener('input', renderAdminActionsReportView);
+        document.getElementById('adminActionsTimeFilter').addEventListener('change', () => { state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); });
+        document.getElementById('adminActionsSearchInput').addEventListener('input', () => { state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); });
+        document.getElementById('adminActionsPrevPageBtn').addEventListener('click', () => { if (state.adminActionsCurrentPage > 1) { state.adminActionsCurrentPage--; renderAdminActionsReportView(); } });
+        document.getElementById('adminActionsNextPageBtn').addEventListener('click', () => { state.adminActionsCurrentPage++; renderAdminActionsReportView(); });
         document.getElementById('myReqStatusFilter').addEventListener('change', renderMyRequestsView);
         document.getElementById('openEmpNoteModalBtn').addEventListener('click', () => openEmpNoteModal());
         document.getElementById('empNoteForm').addEventListener('submit', (e) => { e.preventDefault(); saveEmpNote(); });
@@ -6311,8 +6363,10 @@
           closeModal('empNoteCloseConfirmModal');
           closeModal('empNoteModal');
         });
-        document.getElementById('auditSearchInput').addEventListener('input', renderAuditLogView);
-        document.getElementById('auditActionFilter').addEventListener('change', renderAuditLogView);
+        document.getElementById('auditSearchInput').addEventListener('input', () => { state.auditCurrentPage = 1; renderAuditLogView(); });
+        document.getElementById('auditActionFilter').addEventListener('change', () => { state.auditCurrentPage = 1; renderAuditLogView(); });
+        document.getElementById('auditPrevPageBtn').addEventListener('click', () => { if (state.auditCurrentPage > 1) { state.auditCurrentPage--; renderAuditLogView(); } });
+        document.getElementById('auditNextPageBtn').addEventListener('click', () => { state.auditCurrentPage++; renderAuditLogView(); });
         document.getElementById('benFilterCreatedBy').addEventListener('change', () => { state.benCurrentPage = 1; renderBeneficiaries(); });
 
         document.getElementById('openAddUserModalBtn').addEventListener('click', () => {
