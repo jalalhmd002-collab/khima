@@ -232,10 +232,8 @@
   <header id="appHeader" class="bg-white/85 backdrop-blur-md text-slate-800 border-b border-slate-200/80 border-t-4 border-t-emerald-600 shadow-sm sticky top-0 z-30 transition-colors duration-200">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
       <div class="relative flex items-center gap-2.5 min-w-0">
-        <button type="button" id="headerIconBox" title="قائمة التنقل والأقسام" aria-expanded="false" aria-controls="headerNavDropdown" class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 p-2 rounded-xl shrink-0 transition-colors cursor-pointer">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        <button type="button" id="headerIconBox" title="قائمة التنقل والأقسام" aria-expanded="false" aria-controls="headerNavDropdown" class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-2.5 py-2 rounded-xl shrink-0 transition-colors cursor-pointer">
+          <span class="font-extrabold text-sm sm:text-base tracking-tight num-en">JH</span>
         </button>
         <div id="headerNavDropdown" class="hidden fixed top-14 right-3 sm:absolute sm:top-full sm:right-0 sm:mt-2 w-64 max-w-[calc(100vw-1.5rem)] max-h-[82vh] overflow-y-auto bg-white rounded-2xl border border-slate-200 border-t-4 border-t-emerald-600 shadow-xl py-2.5 px-1.5 z-50 animate-fadeIn">
           <button type="button" data-tab="dashboard" id="nav-mobile-dashboard" class="mobile-nav-btn w-full px-4 py-2.5 text-right text-xs text-emerald-700 font-bold flex items-center gap-2.5 hover:bg-slate-50">
@@ -260,6 +258,9 @@
           <button type="button" data-tab="approvals" id="nav-mobile-approvals" class="admin-only mobile-nav-btn w-full px-4 py-2.5 text-right text-xs text-amber-700 flex items-center justify-between hover:bg-slate-50">
             <span>الطلبات</span>
             <span id="mobileMenuPendingBadge" class="hidden px-2 py-0.5 rounded-full border border-amber-400 text-amber-800 text-[10px] num-en">0</span>
+          </button>
+          <button type="button" data-tab="admin-actions" id="nav-mobile-admin-actions" class="admin-only mobile-nav-btn w-full px-4 py-2.5 text-right text-xs text-indigo-700 flex items-center gap-2 hover:bg-slate-50">
+            <span>حركات اليوم</span>
           </button>
           <button type="button" data-tab="reports" id="nav-mobile-reports" class="admin-only mobile-nav-btn w-full px-4 py-2.5 text-right text-xs text-indigo-700 flex items-center gap-2 hover:bg-slate-50">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -296,10 +297,6 @@
 
       <div class="flex items-center gap-2 shrink-0">
 
-        <div id="syncStatusIndicator" title="حفظ تلقائي محلي في المتصفح (IndexedDB + LocalStorage)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] border border-emerald-200 text-emerald-800 shrink-0">
-          <span id="syncStatusDot" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-          <span id="syncStatusText" class="num-en">حفظ تلقائي محلي</span>
-        </div>
         <div id="activeRoleBadge" class="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full text-slate-700 border border-slate-200 shrink-0">
           <span id="activeRoleText">مدير النظام</span>
         </div>
@@ -337,6 +334,9 @@
         <span>الطلبات</span>
         <span id="desktopPendingBadge" class="hidden px-1.5 py-0.5 rounded-full border border-amber-400 text-amber-800 text-[10px] num-en">0</span>
       </button>
+      <button type="button" data-tab="admin-actions" id="nav-desktop-admin-actions" class="admin-only nav-btn px-3 py-2.5 text-xs lg:text-sm font-medium border-b-2 border-transparent text-indigo-700 hover:text-indigo-900 flex items-center gap-1.5 whitespace-nowrap shrink-0">
+        <span>حركات اليوم</span>
+      </button>
       <button type="button" data-tab="reports" id="nav-desktop-reports" class="admin-only nav-btn px-3 py-2.5 text-xs lg:text-sm font-medium border-b-2 border-transparent text-indigo-700 hover:text-indigo-900 flex items-center gap-1.5 whitespace-nowrap shrink-0">
         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         <span>التقارير</span>
@@ -356,15 +356,12 @@
 
     <!-- TAB 1: DASHBOARD -->
     <section id="tab-dashboard" class="tab-content space-y-5">
-      <div class="employee-only hidden bg-white/95 p-4 rounded-2xl border border-sky-300 border-t-4 border-t-sky-500 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center justify-between gap-3 bg-white/90 backdrop-blur-sm px-4 py-3 rounded-2xl border border-slate-200/80 border-t-4 border-t-emerald-500 shadow-sm no-print">
         <div>
-          <h4 class="text-sm text-slate-900">تبادل الملفات مع المدير (بدون إنترنت)</h4>
-          <p class="text-xs text-slate-500">صدّر طلباتك المعلقة لإرسالها للمدير، أو استورد التحديث الرسمي من المدير</p>
+          <h2 class="text-sm sm:text-base text-slate-900">لوحة التحكم</h2>
+          <p class="text-xs text-slate-500">ملخص الإحصائيات والأنشطة الحديثة</p>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" data-action="emp-export-requests" class="app-btn border border-amber-500 text-amber-700">تصدير ملف الطلبات للمدير (.json)</button>
-          <button type="button" data-action="emp-import-db" class="app-btn border border-sky-500 text-sky-700">استيراد تحديث القاعدة من المدير (.json)</button>
-        </div>
+        <button type="button" id="printDashboardBtn" class="app-btn border border-slate-300 text-slate-700">طباعة</button>
       </div>
 
       <div id="dashboardPendingAlert" class="hidden admin-only bg-white/95 p-4 rounded-2xl border border-amber-300 border-t-4 border-t-amber-500 shadow-sm flex flex-wrap items-center justify-between gap-3">
@@ -457,7 +454,6 @@
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <button type="button" id="exportReportExcelBtn" class="admin-only app-btn border border-indigo-500 text-indigo-700 hover:border-indigo-600 shadow-sm">تصدير Excel (.xlsx)</button>
-            <button type="button" id="exportReportCsvBtn" class="admin-only app-btn border border-slate-300 text-slate-700">CSV</button>
             <button type="button" id="printReportBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
           </div>
         </div>
@@ -926,7 +922,7 @@
           <p class="text-xs text-slate-500">إدارة الجهات المانحة والمتبرعين وتوثيق مساهماتهم والمرفقات</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <button type="button" id="addDonorBtn" class="admin-only app-btn border border-purple-500 text-purple-700 hover:border-purple-600 shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>+ إضافة مانح</span></button>
+          <button type="button" id="addDonorBtn" class="app-btn border border-purple-500 text-purple-700 hover:border-purple-600 shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>+ إضافة مانح</span></button>
           <button type="button" id="exportDonorsBtn" class="admin-only app-btn border border-slate-300 text-slate-700">تصدير إكسل</button>
           <button type="button" id="printDonorsBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
         </div>
@@ -1178,54 +1174,48 @@
     </section>
 
 
-    <!-- TAB: REQUESTS & REPORTS (ADMIN) -->
+    <!-- TAB: REQUESTS (ADMIN) -->
     <section id="tab-approvals" class="tab-content hidden space-y-4">
-      <div class="bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 border-t-4 border-t-amber-500 shadow-sm space-y-3">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 class="text-base sm:text-lg text-slate-900">الطلبات</h2>
-            <p class="text-xs text-slate-500">مراجعة طلبات الموظفين بانتظار الموافقة، ومتابعة حركات اليوم وتعديلات المديرين بشكل مستقل</p>
-          </div>
-          <div class="flex flex-wrap items-center gap-2 shrink-0">
-            <button type="button" id="printApprovalsBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
-          </div>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 border-t-4 border-t-amber-500 shadow-sm">
+        <div>
+          <h2 class="text-base sm:text-lg text-slate-900">الطلبات</h2>
+          <p class="text-xs text-slate-500">مراجعة طلبات الموظفين بانتظار الموافقة والاعتماد</p>
         </div>
-        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/80">
-          <button type="button" id="approvalsSubPendingBtn" class="app-btn-sm btn-active-amber flex-1 sm:flex-none">طلبات الموظفين بانتظار الموافقة</button>
-          <button type="button" id="approvalsSubAdminActionsBtn" class="app-btn-sm border border-transparent text-slate-600 flex-1 sm:flex-none">حركات اليوم / تعديلات المديرين</button>
-        </div>
-      </div>
-
-      <!-- Sub-panel 1: Employee Pending Requests -->
-      <div id="approvalsPendingPanel" class="space-y-4">
-        <div class="bg-white/90 p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span class="text-slate-600">تصفية طلبات الموظفين:</span>
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
           <select id="approvalsStatusFilter" class="app-input sm:w-44 text-xs">
             <option value="pending">قيد المراجعة</option>
             <option value="approved">المعتمدة</option>
             <option value="rejected">المرفوضة</option>
             <option value="all">كل الطلبات</option>
           </select>
+          <button type="button" id="printApprovalsBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
         </div>
+      </div>
+
+      <div id="approvalsPendingPanel" class="space-y-4">
         <div id="approvalsListContainer" class="space-y-4"></div>
         <div id="noApprovalsMsg" class="hidden p-10 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا توجد طلبات مطابقة في صندوق الاعتماد.</div>
       </div>
+    </section>
 
-      <!-- Sub-panel 2: Today's Actions / Admin Edits -->
-      <div id="approvalsAdminActionsPanel" class="hidden space-y-4">
-        <div class="bg-white/90 p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span class="text-slate-600">تصفية حركات المديرين (تُطبق فوراً في السجل الرسمي):</span>
-          <div class="flex flex-wrap items-center gap-2">
-            <select id="adminActionsTimeFilter" class="app-input sm:w-40 text-xs">
-              <option value="today">حركات اليوم</option>
-              <option value="all">كل الأوقات</option>
-            </select>
-            <input type="text" id="adminActionsSearchInput" placeholder="بحث باسم المدير أو التفاصيل..." class="app-input sm:w-56 text-xs">
-          </div>
+    <!-- TAB: ADMIN TODAY ACTIONS (STANDALONE) -->
+    <section id="tab-admin-actions" class="tab-content hidden space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 border-t-4 border-t-indigo-500 shadow-sm">
+        <div>
+          <h2 class="text-base sm:text-lg text-slate-900">حركات اليوم وتعديلات المديرين</h2>
+          <p class="text-xs text-slate-500">متابعة الحركات والتعديلات المنفذة مباشرة من حسابات المديرين في السجل الرسمي</p>
         </div>
-        <div id="adminActionsListContainer" class="space-y-3"></div>
-        <div id="noAdminActionsMsg" class="hidden p-10 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا توجد حركات مسجلة للمديرين ضمن هذا النطاق.</div>
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="adminActionsTimeFilter" class="app-input sm:w-40 text-xs">
+            <option value="today">حركات اليوم</option>
+            <option value="all">كل الأوقات</option>
+          </select>
+          <input type="text" id="adminActionsSearchInput" placeholder="بحث باسم المدير أو التفاصيل..." class="app-input sm:w-56 text-xs">
+          <button type="button" id="printAdminActionsBtn" class="app-btn border border-slate-300 text-slate-700">طباعة</button>
+        </div>
       </div>
+      <div id="adminActionsListContainer" class="space-y-3"></div>
+      <div id="noAdminActionsMsg" class="hidden p-10 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا توجد حركات مسجلة للمديرين ضمن هذا النطاق.</div>
     </section>
 
     <!-- TAB: EMPLOYEE MY REQUESTS -->
@@ -1236,12 +1226,15 @@
           <p class="text-xs text-slate-500">متابعة حالة طلبات الإضافة والتعديل التي أرسلتها للإدارة</p>
         </div>
         <input type="file" id="empImportDbFileInput" accept=".json" class="hidden">
-        <select id="myReqStatusFilter" class="app-input sm:w-44 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" id="openEmpNoteModalBtn" class="app-btn border border-violet-500 text-violet-700">+ كتابة ملاحظة للإدارة</button>
+          <select id="myReqStatusFilter" class="app-input sm:w-44 text-xs">
           <option value="all">كل الحالات</option>
           <option value="pending">قيد المراجعة</option>
           <option value="approved">مقبول</option>
           <option value="rejected">مرفوض</option>
-        </select>
+          </select>
+        </div>
       </div>
       <div id="myRequestsListContainer" class="space-y-3"></div>
       <div id="noMyRequestsMsg" class="hidden p-10 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لم تقم بإرسال أي طلبات بعد.</div>
@@ -2247,6 +2240,48 @@
     </div>
   </div>
 
+  <!-- 22. Employee Note Modal -->
+  <div id="empNoteModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 hidden modal-backdrop" data-modal="empNoteModal">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[92vh] flex flex-col overflow-hidden animate-fadeIn border border-slate-200 border-t-4 border-t-violet-600">
+      <div class="bg-slate-50/90 text-slate-900 px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
+        <h3 id="empNoteModalTitle" class="text-base text-slate-900">كتابة ملاحظة للإدارة</h3>
+        <button type="button" id="empNoteCloseXBtn" class="text-slate-400 hover:text-slate-700 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="empNoteForm" class="p-4 sm:p-5 overflow-y-auto space-y-3 text-xs text-right">
+        <input type="hidden" id="empNoteEditId" value="new">
+        <div>
+          <label class="app-label">عنوان الملاحظة (اختياري)</label>
+          <input type="text" id="empNoteTitle" placeholder="مثلاً: ملاحظة ميدانية أو طلب مراجعة..." class="app-input">
+        </div>
+        <div>
+          <label class="app-label">نص الملاحظة *</label>
+          <textarea id="empNoteContent" rows="5" required placeholder="اكتب الملاحظات التي تريد إرسالها للمدير هنا..." class="app-input"></textarea>
+        </div>
+        <div class="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+          <button type="button" id="empNoteCloseBtn" class="app-btn border border-slate-300 text-slate-600">إغلاق</button>
+          <button type="submit" class="app-btn border border-violet-500 text-violet-700">حفظ الملاحظة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 23. Employee Note Close Confirmation Modal (Save / Discard / Cancel) -->
+  <div id="empNoteCloseConfirmModal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden modal-backdrop" data-modal="empNoteCloseConfirmModal">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-fadeIn border border-slate-200 border-t-4 border-t-amber-500">
+      <div class="p-5 text-center space-y-2.5">
+        <h3 class="text-base text-slate-900">تأكيد إغلاق الملاحظة</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">لديك نص غير محفوظ في الملاحظة. ماذا تود أن تفعل؟</p>
+      </div>
+      <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex flex-wrap items-center justify-center gap-2">
+        <button type="button" id="empNoteConfirmSaveBtn" class="app-btn-sm border border-emerald-600 text-emerald-700">حفظ</button>
+        <button type="button" id="empNoteConfirmDiscardBtn" class="app-btn-sm border border-rose-500 text-rose-700">إغلاق</button>
+        <button type="button" data-close-modal="empNoteCloseConfirmModal" class="app-btn-sm border border-slate-300 text-slate-700">إلغاء الأمر</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 10. Toast -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[10001] hidden bg-white text-slate-900 border border-slate-200 border-t-4 border-t-emerald-600 text-xs px-4 py-2.5 rounded-2xl shadow-xl transition duration-300 flex items-center gap-2">
     <span id="toastIcon">✓</span>
@@ -2284,6 +2319,7 @@
         addons: { headerBorder: 'border-t-indigo-600', iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/80', desktopActive: 'border-indigo-600 text-indigo-700', mobileText: 'text-indigo-700' },
         sync: { headerBorder: 'border-t-violet-600', iconBg: 'bg-violet-50 text-violet-700 border-violet-200/80', desktopActive: 'border-violet-600 text-violet-700', mobileText: 'text-violet-700' },
         approvals: { headerBorder: 'border-t-amber-600', iconBg: 'bg-amber-50 text-amber-700 border-amber-200/80', desktopActive: 'border-amber-600 text-amber-700', mobileText: 'text-amber-700' },
+        'admin-actions': { headerBorder: 'border-t-indigo-600', iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/80', desktopActive: 'border-indigo-600 text-indigo-700', mobileText: 'text-indigo-700' },
         reports: { headerBorder: 'border-t-indigo-600', iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/80', desktopActive: 'border-indigo-600 text-indigo-700', mobileText: 'text-indigo-700' },
         'my-requests': { headerBorder: 'border-t-sky-600', iconBg: 'bg-sky-50 text-sky-700 border-sky-200/80', desktopActive: 'border-sky-600 text-sky-700', mobileText: 'text-sky-700' },
         users: { headerBorder: 'border-t-indigo-600', iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/80', desktopActive: 'border-indigo-600 text-indigo-700', mobileText: 'text-indigo-700' },
@@ -2475,14 +2511,10 @@
       }
 
       function updateSyncIndicatorUI() {
-        const dot = document.getElementById('syncStatusDot');
-        const txt = document.getElementById('syncStatusText');
         const info = document.getElementById('syncPanelInfoText');
         const loginNet = document.getElementById('loginNetBadge');
         if (loginNet) loginNet.textContent = 'نظام مستقل بالكامل (100% Offline-First)';
         if (info) info.textContent = 'التخزين المحلي النشط: IndexedDB + LocalStorage (حفظ تلقائي فوري بدون إنترنت)';
-        if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 shrink-0';
-        if (txt) txt.textContent = 'حفظ تلقائي محلي';
       }
 
       function nowDateTimeEn() {
@@ -2703,6 +2735,7 @@
         sync: 'البيانات',
         addons: 'الملحقات والإضافات',
         approvals: 'الطلبات',
+        'admin-actions': 'حركات اليوم',
         reports: 'التقارير',
         'my-requests': 'طلباتي المعلقة',
         users: 'إدارة المستخدمين والصلاحيات',
@@ -2755,6 +2788,7 @@
         if (tabId === 'dashboard') runAdvancedReport();
         if (tabId === 'sync' || tabId === 'addons') renderAddons();
         if (tabId === 'approvals') renderApprovalsView();
+        if (tabId === 'admin-actions') renderAdminActionsReportView();
         if (tabId === 'my-requests') renderMyRequestsView();
         if (tabId === 'users') renderUsersView();
         if (tabId === 'audit') renderAuditLogView();
@@ -2792,7 +2826,7 @@
         const activeRoleText = document.getElementById('activeRoleText');
         if (activeRoleText) {
           const name = state.currentUser ? state.currentUser.fullName : (isAdmin ? 'مدير النظام' : 'موظف');
-          activeRoleText.textContent = `${name} (${isAdmin ? 'مدير النظام' : 'موظف'})`;
+          activeRoleText.textContent = name;
         }
         document.querySelectorAll('.admin-only').forEach(el => {
           el.classList.toggle('hidden', !isAdmin);
@@ -2814,7 +2848,8 @@
         renderAddons();
         runAdvancedReport();
         updatePendingBadges();
-        if (state.currentTab === 'approvals') { renderApprovalsView(); renderAdminActionsReportView(); }
+        if (state.currentTab === 'approvals') renderApprovalsView();
+        if (state.currentTab === 'admin-actions') renderAdminActionsReportView();
         if (state.currentTab === 'my-requests') renderMyRequestsView();
         if (state.currentTab === 'users') renderUsersView();
         if (state.currentTab === 'audit') renderAuditLogView();
@@ -2896,27 +2931,6 @@
         difficultyLevel: 'درجة الصعوبة'
       };
 
-      function setApprovalsSubTab(sub) {
-        const pBtn = document.getElementById('approvalsSubPendingBtn');
-        const aBtn = document.getElementById('approvalsSubAdminActionsBtn');
-        const pPanel = document.getElementById('approvalsPendingPanel');
-        const aPanel = document.getElementById('approvalsAdminActionsPanel');
-        if (!pBtn || !aBtn || !pPanel || !aPanel) return;
-        if (sub === 'admin_actions') {
-          aBtn.className = 'app-btn-sm btn-active-indigo flex-1 sm:flex-none';
-          pBtn.className = 'app-btn-sm border border-transparent text-slate-600 flex-1 sm:flex-none';
-          pPanel.classList.add('hidden');
-          aPanel.classList.remove('hidden');
-          renderAdminActionsReportView();
-        } else {
-          pBtn.className = 'app-btn-sm btn-active-amber flex-1 sm:flex-none';
-          aBtn.className = 'app-btn-sm border border-transparent text-slate-600 flex-1 sm:flex-none';
-          aPanel.classList.add('hidden');
-          pPanel.classList.remove('hidden');
-          renderApprovalsView();
-        }
-      }
-
       function renderAdminActionsReportView() {
         const container = document.getElementById('adminActionsListContainer');
         const noMsg = document.getElementById('noAdminActionsMsg');
@@ -2969,7 +2983,9 @@
           update: { label: 'تعديل بيانات مستفيد / حالة', cls: 'border-sky-300 text-sky-800' },
           add_to_needy: { label: 'إدراج أفراد في الحالات', cls: 'border-rose-300 text-rose-800' },
           add_to_aid: { label: 'ترشيح / إدراج في المساعدات', cls: 'border-sky-300 text-sky-800' },
-          add_to_training: { label: 'ترشيح / إدراج في التدريب', cls: 'border-amber-300 text-amber-800' }
+          add_to_training: { label: 'ترشيح / إدراج في التدريب', cls: 'border-amber-300 text-amber-800' },
+          employee_note: { label: 'ملاحظة موظف', cls: 'border-violet-300 text-violet-800' },
+          add_donor: { label: 'إضافة مانح', cls: 'border-purple-300 text-purple-800' }
         };
         container.innerHTML = list.map(req => {
           const meta = REQ_TYPE_META[req.requestType] || REQ_TYPE_META.update;
@@ -2980,7 +2996,18 @@
           let titleLine = '';
           let diffHtml = '';
 
-          if (req.requestType === 'add_to_needy') {
+          if (req.requestType === 'add_donor') {
+            titleLine = escapeHtml(newD.name || 'مانح جديد');
+            diffHtml = `<div class="p-3 rounded-xl border border-purple-200 bg-purple-50/40 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div><span class="text-slate-500 block">الاسم:</span><span>${escapeHtml(newD.name || '-')}</span></div>
+              <div><span class="text-slate-500 block">النوع:</span><span>${escapeHtml(newD.type || '-')}</span></div>
+              <div><span class="text-slate-500 block">الهاتف:</span><span class="num-en">${escapeHtml(newD.phone || '-')}</span></div>
+              <div><span class="text-slate-500 block">العنوان:</span><span>${escapeHtml(newD.address || '-')}</span></div>
+            </div>`;
+          } else if (req.requestType === 'employee_note') {
+            titleLine = escapeHtml(newD.noteTitle || 'ملاحظة مرسلة من الموظف');
+            diffHtml = `<div class="p-3 rounded-xl border border-violet-200 bg-violet-50/40 text-xs text-slate-800 whitespace-pre-wrap leading-relaxed">${escapeHtml(newD.noteContent || '-')}</div>`;
+          } else if (req.requestType === 'add_to_needy') {
             const ids = Array.isArray(newD.nationalIds) ? newD.nationalIds : [];
             const names = ids.map(nid => {
               const b = state.beneficiaries.find(x => x.nationalId === nid);
@@ -3086,7 +3113,15 @@
         const now = nowDateTimeEn();
         const nd = req.newData || {};
 
-        if (req.requestType === 'add_to_needy') {
+        if (req.requestType === 'add_donor') {
+          if (nd && nd.name && !state.donors.some(d => d.id === nd.id)) {
+            state.donors.push(nd);
+            syncDonorDropdowns();
+          }
+          recordAuditLog('اعتماد طلب', 'المانحين', nd.id || req.id, `اعتماد إضافة المانح (${nd.name || '-'}) المرسل من ${req.submittedByName}`);
+        } else if (req.requestType === 'employee_note') {
+          recordAuditLog('اعتماد طلب', 'ملاحظة موظف', req.id, `اعتماد ملاحظة الموظف (${req.submittedByName}): ${nd.noteTitle || nd.noteContent || ''}`);
+        } else if (req.requestType === 'add_to_needy') {
           const ids = Array.isArray(nd.nationalIds) ? nd.nationalIds : [];
           const level = nd.difficultyLevel || '';
           const existing = new Set(state.needyFamilies.map(n => n.nationalId));
@@ -3228,13 +3263,16 @@
                   req.requestType === 'add_to_needy' ? 'طلب إدراج في الحالات' :
                   req.requestType === 'add_to_aid' ? 'طلب ترشيح لمساعدة' :
                   req.requestType === 'add_to_training' ? 'طلب ترشيح لتدريب' :
+                  req.requestType === 'employee_note' ? 'ملاحظة للإدارة' :
+                  req.requestType === 'add_donor' ? 'طلب إضافة مانح' :
                   'طلب تعديل بيانات'
-                }: ${escapeHtml((req.newData && (req.newData.fullName || req.newData.description || req.newData.title || req.newData.difficultyLevel)) || req.nationalId)}</h4>
+                }: ${escapeHtml((req.newData && (req.newData.name || req.newData.noteTitle || req.newData.noteContent || req.newData.fullName || req.newData.description || req.newData.title || req.newData.difficultyLevel)) || req.nationalId)}</h4>
+                ${req.requestType === 'employee_note' && req.newData && req.newData.noteContent ? `<p class="text-xs text-slate-700 mt-1 whitespace-pre-wrap">${escapeHtml(req.newData.noteContent)}</p>` : ''}
                 <p class="text-[11px] text-slate-500 num-en mt-0.5">تاريخ الإرسال: ${escapeHtml(req.submittedAt)}${req.reviewedAt ? ` | تمت المراجعة: ${escapeHtml(req.reviewedAt)}` : ''}</p>
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 ${req.status === 'pending' ? `
-                  ${(req.requestType === 'create' || req.requestType === 'update') ? `<button type="button" data-action="edit-my-request" data-id="${escapeHtml(req.id)}" class="app-btn-sm border border-sky-500 text-sky-700">تعديل</button>` : ''}
+                  ${(req.requestType === 'create' || req.requestType === 'update' || req.requestType === 'employee_note') ? `<button type="button" data-action="edit-my-request" data-id="${escapeHtml(req.id)}" class="app-btn-sm border border-sky-500 text-sky-700">تعديل</button>` : ''}
                   <button type="button" data-action="delete-my-request" data-id="${escapeHtml(req.id)}" class="app-btn-sm border border-rose-500 text-rose-700">حذف / إلغاء</button>
                 ` : ''}
                 <span class="px-3 py-1 rounded-full border text-xs ${statusCls}">${statusLabel}</span>
@@ -3243,9 +3281,90 @@
         }).join('');
       }
 
+      let empNoteOrigTitle = '';
+      let empNoteOrigContent = '';
+
+      function openEmpNoteModal(req = null) {
+        document.getElementById('empNoteForm').reset();
+        if (req) {
+          document.getElementById('empNoteModalTitle').textContent = 'تعديل الملاحظة';
+          document.getElementById('empNoteEditId').value = req.id;
+          empNoteOrigTitle = (req.newData && req.newData.noteTitle) || '';
+          empNoteOrigContent = (req.newData && req.newData.noteContent) || '';
+        } else {
+          document.getElementById('empNoteModalTitle').textContent = 'كتابة ملاحظة للإدارة';
+          document.getElementById('empNoteEditId').value = 'new';
+          empNoteOrigTitle = '';
+          empNoteOrigContent = '';
+        }
+        document.getElementById('empNoteTitle').value = empNoteOrigTitle;
+        document.getElementById('empNoteContent').value = empNoteOrigContent;
+        openModal('empNoteModal');
+      }
+
+      function saveEmpNote() {
+        const editId = document.getElementById('empNoteEditId').value;
+        const noteTitle = document.getElementById('empNoteTitle').value.trim();
+        const noteContent = document.getElementById('empNoteContent').value.trim();
+        if (!noteContent) {
+          showToast('يرجى كتابة نص الملاحظة قبل الحفظ', false);
+          return false;
+        }
+        const now = nowDateTimeEn();
+        const actor = state.currentUser || { id: 'emp', fullName: 'الموظف' };
+        if (editId === 'new') {
+          const req = {
+            id: 'REQ-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            requestType: 'employee_note',
+            nationalId: '',
+            oldData: null,
+            newData: { noteTitle, noteContent },
+            submittedById: actor.id,
+            submittedByName: actor.fullName,
+            submittedAt: now,
+            status: 'pending',
+            reviewedByName: '',
+            reviewedAt: '',
+            reviewNote: ''
+          };
+          state.pendingRequests.unshift(req);
+          recordAuditLog('إضافة', 'الطلبات المعلقة', req.id, `إضافة ملاحظة موظف: ${noteTitle || noteContent.slice(0, 40)}`);
+          showToast('تم حفظ الملاحظة في طلباتك المعلقة');
+        } else {
+          const req = state.pendingRequests.find(r => r.id === editId && r.status === 'pending');
+          if (req) {
+            req.newData = { noteTitle, noteContent };
+            req.submittedAt = now;
+            recordAuditLog('تعديل', 'الطلبات المعلقة', req.id, `تعديل ملاحظة موظف: ${noteTitle || noteContent.slice(0, 40)}`);
+            showToast('تم تحديث الملاحظة بنجاح');
+          }
+        }
+        persistAll();
+        updatePendingBadges();
+        renderMyRequestsView();
+        closeModal('empNoteCloseConfirmModal');
+        closeModal('empNoteModal');
+        return true;
+      }
+
+      function requestCloseEmpNoteModal() {
+        const curTitle = document.getElementById('empNoteTitle').value.trim();
+        const curContent = document.getElementById('empNoteContent').value.trim();
+        const isDirty = (curTitle !== empNoteOrigTitle.trim()) || (curContent !== empNoteOrigContent.trim());
+        if (isDirty && (curTitle || curContent)) {
+          openModal('empNoteCloseConfirmModal');
+        } else {
+          closeModal('empNoteModal');
+        }
+      }
+
       function openPendingRequestForEdit(reqId) {
         const req = state.pendingRequests.find(r => r.id === reqId && r.status === 'pending');
         if (!req) return;
+        if (req.requestType === 'employee_note') {
+          openEmpNoteModal(req);
+          return;
+        }
         const d = req.newData || {};
         document.getElementById('beneficiaryForm').reset();
 
@@ -3467,6 +3586,29 @@
           address: document.getElementById('donorAddress').value.trim(),
           notes: document.getElementById('donorNotes').value.trim(),
         };
+        if (state.role !== 'admin') {
+          const actor = state.currentUser || { id: 'emp', fullName: 'الموظف' };
+          const req = {
+            id: 'REQ-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            requestType: 'add_donor',
+            nationalId: payload.id,
+            oldData: null,
+            newData: payload,
+            submittedById: actor.id,
+            submittedByName: actor.fullName,
+            submittedAt: nowDateTimeEn(),
+            status: 'pending',
+            reviewedByName: '',
+            reviewedAt: '',
+            reviewNote: ''
+          };
+          state.pendingRequests.unshift(req);
+          recordAuditLog('إضافة', 'الطلبات المعلقة', payload.id, `طلب إضافة مانح (${name}) بانتظار موافقة المدير`);
+          persistAll(); closeModal('donorModal'); updatePendingBadges();
+          if (state.currentTab === 'my-requests') renderMyRequestsView();
+          showToast('تم إرسال طلب إضافة المانح إلى المدير للمراجعة');
+          return;
+        }
         if (editId === 'new') {
           state.donors.push(payload);
           showToast('تمت إضافة المانح بنجاح');
@@ -6157,11 +6299,18 @@
 
 
         document.getElementById('approvalsStatusFilter').addEventListener('change', renderApprovalsView);
-        document.getElementById('approvalsSubPendingBtn').addEventListener('click', () => setApprovalsSubTab('pending'));
-        document.getElementById('approvalsSubAdminActionsBtn').addEventListener('click', () => setApprovalsSubTab('admin_actions'));
         document.getElementById('adminActionsTimeFilter').addEventListener('change', renderAdminActionsReportView);
         document.getElementById('adminActionsSearchInput').addEventListener('input', renderAdminActionsReportView);
         document.getElementById('myReqStatusFilter').addEventListener('change', renderMyRequestsView);
+        document.getElementById('openEmpNoteModalBtn').addEventListener('click', () => openEmpNoteModal());
+        document.getElementById('empNoteForm').addEventListener('submit', (e) => { e.preventDefault(); saveEmpNote(); });
+        document.getElementById('empNoteCloseBtn').addEventListener('click', requestCloseEmpNoteModal);
+        document.getElementById('empNoteCloseXBtn').addEventListener('click', requestCloseEmpNoteModal);
+        document.getElementById('empNoteConfirmSaveBtn').addEventListener('click', () => { saveEmpNote(); });
+        document.getElementById('empNoteConfirmDiscardBtn').addEventListener('click', () => {
+          closeModal('empNoteCloseConfirmModal');
+          closeModal('empNoteModal');
+        });
         document.getElementById('auditSearchInput').addEventListener('input', renderAuditLogView);
         document.getElementById('auditActionFilter').addEventListener('change', renderAuditLogView);
         document.getElementById('benFilterCreatedBy').addEventListener('change', () => { state.benCurrentPage = 1; renderBeneficiaries(); });
@@ -6717,16 +6866,35 @@
         });
 
         document.getElementById('printApprovalsBtn').addEventListener('click', () => {
-          const isAdminActions = !document.getElementById('approvalsAdminActionsPanel').classList.contains('hidden');
-          const listEl = document.getElementById(isAdminActions ? 'adminActionsList' : 'approvalsList');
+          const listEl = document.getElementById('approvalsListContainer');
           if (!listEl || !listEl.children.length) { showToast('لا توجد بيانات للطباعة!', false); return; }
           const clone = listEl.cloneNode(true);
           clone.querySelectorAll('button').forEach(b => b.remove());
-          const title = isAdminActions ? 'تقرير حركات اليوم وتعديلات المديرين' : 'كشف طلبات الموظفين بانتظار الموافقة';
+          const title = 'كشف طلبات الموظفين بانتظار الموافقة';
           const printHtml = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>${title}</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@page{size:A4 portrait;margin:10mm;}*{font-family:'Cairo',Tahoma,Arial,sans-serif;box-sizing:border-box;font-weight:400;}body{margin:0;padding:12px;color:#1e293b;direction:rtl;background:#fff;}h1{text-align:center;font-size:17px;margin:0;}p.meta{text-align:center;font-size:11px;color:#64748b;border-bottom:1.5px solid #cbd5e1;padding-bottom:8px;margin-bottom:12px;}.num-en{font-family:'Inter','Cairo',sans-serif;direction:ltr;display:inline-block;unicode-bidi:isolate;}img{max-width:90px;max-height:90px;border-radius:8px;}</style></head><body><h1>منصة التمكين المجتمعي - ${title}</h1><p class="meta">تاريخ الطباعة: <span class="num-en">${toEnDigits(todayISO())}</span></p><div>${clone.innerHTML}</div><script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>`;
           const win = window.open('', '_blank', 'width=1000,height=720');
           if (win) { win.document.open(); win.document.write(printHtml); win.document.close(); win.focus(); }
           else { triggerDownload(new Blob([printHtml], { type: 'text/html;charset=utf-8' }), `${title}_${todayISO()}.html`); showToast('تم تحميل ملف الطباعة لفتحه وطباعته'); }
+        });
+
+        document.getElementById('printDashboardBtn').addEventListener('click', () => {
+          const dashEl = document.getElementById('tab-dashboard');
+          if (!dashEl) return;
+          const clone = dashEl.cloneNode(true);
+          clone.querySelectorAll('.no-print, button[data-tab], #dashboardPendingAlert').forEach(el => el.remove());
+          const printHtml = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>لوحة التحكم</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@page{size:A4 portrait;margin:12mm;}*{font-family:'Cairo',Tahoma,Arial,sans-serif;box-sizing:border-box;font-weight:400;}body{margin:0;padding:12px;color:#1e293b;direction:rtl;background:#fff;}h1{text-align:center;font-size:17px;margin:0;}p.meta{text-align:center;font-size:11px;color:#64748b;border-bottom:1.5px solid #cbd5e1;padding-bottom:8px;margin-bottom:14px;}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px;}.rounded-2xl,.rounded-xl{border:1px solid #cbd5e1;border-radius:10px;padding:10px;}.space-y-2>*+*{margin-top:6px;}.flex{display:flex;align-items:center;justify-content:space-between;gap:8px;}.text-2xl{font-size:20px;}.text-xs{font-size:11.5px;}.num-en{font-family:'Inter','Cairo',sans-serif;direction:ltr;display:inline-block;unicode-bidi:isolate;}</style></head><body><h1>منصة التمكين المجتمعي - ملخص لوحة التحكم</h1><p class="meta">تاريخ الطباعة: <span class="num-en">${toEnDigits(todayISO())}</span></p>${clone.innerHTML}<script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>`;
+          const win = window.open('', '_blank', 'width=950,height=720');
+          if (win) { win.document.open(); win.document.write(printHtml); win.document.close(); win.focus(); }
+          else { triggerDownload(new Blob([printHtml], { type: 'text/html;charset=utf-8' }), `لوحة_التحكم_${todayISO()}.html`); showToast('تم تنزيل نسخة جاهزة للطباعة'); }
+        });
+
+        document.getElementById('printAdminActionsBtn').addEventListener('click', () => {
+          const listEl = document.getElementById('adminActionsListContainer');
+          if (!listEl || !listEl.children.length) { showToast('لا توجد حركات للطباعة!', false); return; }
+          const printHtml = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>حركات اليوم وتعديلات المديرين</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@page{size:A4 portrait;margin:12mm;}*{font-family:'Cairo',Tahoma,Arial,sans-serif;box-sizing:border-box;font-weight:400;}body{margin:0;padding:12px;color:#1e293b;direction:rtl;background:#fff;}h1{text-align:center;font-size:17px;margin:0;}p.meta{text-align:center;font-size:11px;color:#64748b;border-bottom:1.5px solid #cbd5e1;padding-bottom:8px;margin-bottom:14px;}.rounded-2xl{border:1px solid #cbd5e1;border-radius:10px;padding:10px;margin-bottom:8px;page-break-inside:avoid;}.flex{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}.text-xs{font-size:11.5px;}.num-en{font-family:'Inter','Cairo',sans-serif;direction:ltr;display:inline-block;unicode-bidi:isolate;}</style></head><body><h1>منصة التمكين المجتمعي - حركات اليوم وتعديلات المديرين</h1><p class="meta">تاريخ الطباعة: <span class="num-en">${toEnDigits(todayISO())}</span></p>${listEl.innerHTML}<script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>`;
+          const win = window.open('', '_blank', 'width=950,height=720');
+          if (win) { win.document.open(); win.document.write(printHtml); win.document.close(); win.focus(); }
+          else { triggerDownload(new Blob([printHtml], { type: 'text/html;charset=utf-8' }), `حركات_اليوم_${todayISO()}.html`); showToast('تم تنزيل نسخة جاهزة للطباعة'); }
         });
 
         document.getElementById('printAuditBtn').addEventListener('click', () => {
@@ -6931,10 +7099,6 @@
         document.getElementById('exportReportExcelBtn').addEventListener('click', () => {
           if (!state.filteredReportResults.length) { showToast('لا توجد نتائج لتصديرها!', false); return; }
           openExportConfirmModal('تأكيد تصدير التقرير (Excel)', `سيتم تصدير نتائج التقرير المفلتر (${state.filteredReportResults.length} سجل) بصيغة Excel (.xlsx). هل تود المتابعة؟`, () => exportFilteredReport(false));
-        });
-        document.getElementById('exportReportCsvBtn').addEventListener('click', () => {
-          if (!state.filteredReportResults.length) { showToast('لا توجد نتائج لتصديرها!', false); return; }
-          openExportConfirmModal('تأكيد تصدير التقرير (CSV)', `سيتم تصدير نتائج التقرير المفلتر (${state.filteredReportResults.length} سجل) بصيغة CSV. هل تود المتابعة؟`, () => exportFilteredReport(true));
         });
 
         document.getElementById('exportBackupBtn').addEventListener('click', () => {
