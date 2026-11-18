@@ -64,8 +64,11 @@
     }
 
     @media print {
-      @page { size: A4; margin: 12mm; }
+      @page { size: A4 portrait; margin: 10mm; }
+      html, body { width: 100%; margin: 0; padding: 0; direction: rtl; font-size: 11px; }
       h3, h4 { page-break-after: avoid !important; break-after: avoid !important; }
+      table { width: 100% !important; min-width: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; }
+      th, td { padding: 5px 6px !important; line-height: 1.3 !important; vertical-align: middle !important; white-space: normal !important; word-wrap: break-word !important; overflow-wrap: break-word !important; }
       tr { page-break-inside: avoid !important; break-inside: avoid !important; }
       thead { display: table-header-group !important; }
       #donorViewAidsWrap, #donorViewWsWrap, .prof-subtable-wrap { width: 100% !important; overflow: visible !important; page-break-inside: avoid !important; break-inside: avoid !important; }
@@ -3804,6 +3807,10 @@
           if (!isNaN(minFam) && fCount < minFam) return false;
           if (!isNaN(maxFam) && fCount > maxFam) return false;
           return true;
+        }).sort((a, b) => {
+          const ta = String(a.updatedAt || a.createdAt || '');
+          const tb = String(b.updatedAt || b.createdAt || '');
+          return tb.localeCompare(ta);
         });
 
         const PAGE_SIZE = 20;
@@ -5033,6 +5040,7 @@
           if (row.address && !target.address) { target.address = row.address; changed = true; }
           if (row.healthStatus && !target.healthStatus) { target.healthStatus = row.healthStatus; changed = true; }
           if (row.notes && !target.notes) { target.notes = row.notes; changed = true; }
+          if (changed) target.updatedAt = nowDateTimeEn();
           status = changed ? 'updated' : 'existing';
         } else {
           target = {
@@ -5045,7 +5053,9 @@
             education: row.education || '',
             address: row.address || '',
             healthStatus: row.healthStatus || '',
-            notes: row.notes || ''
+            notes: row.notes || '',
+            createdAt: nowDateTimeEn(),
+            updatedAt: nowDateTimeEn()
           };
           state.beneficiaries.push(target);
           status = 'added';
@@ -6954,7 +6964,7 @@
         document.getElementById('printAuditBtn').addEventListener('click', () => {
           const tbody = document.getElementById('auditTableBody');
           if (!tbody || !tbody.children.length) { showToast('لا توجد سجلات رقابة للطباعة!', false); return; }
-          const printHtml = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>سجل الرقابة</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:10mm;}*{font-family:'Cairo',Tahoma,Arial,sans-serif;box-sizing:border-box;font-weight:400;}body{margin:0;padding:10px;color:#1e293b;direction:rtl;background:#fff;}h1{text-align:center;font-size:17px;margin:0;}p.meta{text-align:center;font-size:11px;color:#64748b;border-bottom:1.5px solid #cbd5e1;padding-bottom:8px;margin-bottom:12px;}table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:11px;}thead{display:table-header-group;}tr{page-break-inside:avoid;}th,td{border:1px solid #cbd5e1;padding:6px 8px;text-align:right;white-space:normal;word-wrap:break-word;vertical-align:middle;}th{font-weight:700!important;border-top:1px solid #94a3b8;border-bottom:2px solid #94a3b8;color:#0f172a;}.num-en{font-family:'Inter','Cairo',sans-serif;direction:ltr;display:inline-block;unicode-bidi:isolate;}td.num-en,th.num-en{display:table-cell!important;direction:rtl;text-align:right;}</style></head><body><h1>منصة التمكين المجتمعي - سجل الرقابة وتتبّع التغييرات</h1><p class="meta">إجمالي السجلات المعروضة: <span class="num-en">${toEnDigits(String(tbody.children.length))}</span> | تاريخ الطباعة: <span class="num-en">${toEnDigits(todayISO())}</span></p><table><thead><tr><th style="width:16%">التاريخ والوقت</th><th style="width:16%">المنفذ</th><th style="width:12%">نوع الحركة</th><th style="width:14%">القسم</th><th style="width:42%">التفاصيل</th></tr></thead><tbody>${tbody.innerHTML}</tbody></table><script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>`;
+          const printHtml = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>سجل الرقابة</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@page{size:A4 landscape;margin:10mm;}*{font-family:'Cairo',Tahoma,Arial,sans-serif;box-sizing:border-box;font-weight:400;}html,body{width:100%;margin:0;padding:0;color:#1e293b;direction:rtl;background:#fff;font-size:11px;}h1{text-align:center;font-size:16px;margin:0 0 4px;}p.meta{text-align:center;font-size:11px;color:#64748b;border-bottom:1.5px solid #cbd5e1;padding-bottom:6px;margin:0 0 10px;}table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px;}thead{display:table-header-group;}tr{page-break-inside:avoid;break-inside:avoid;}th,td{border:1px solid #cbd5e1;padding:5px 6px;line-height:1.3;text-align:right;vertical-align:middle;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;min-width:0!important;}th{font-weight:700!important;border-top:1px solid #94a3b8;border-bottom:2px solid #94a3b8;color:#0f172a;}th:nth-child(1),td:nth-child(1){width:5%;text-align:center;}th:nth-child(2),td:nth-child(2){width:15%;direction:ltr;text-align:right;}th:nth-child(3),td:nth-child(3){width:16%;}th:nth-child(4),td:nth-child(4){width:11%;}th:nth-child(5),td:nth-child(5){width:11%;}th:nth-child(6),td:nth-child(6){width:42%;word-wrap:break-word;overflow-wrap:break-word;white-space:normal;}.num-en{font-family:'Inter','Cairo',sans-serif;direction:ltr;display:inline-block;unicode-bidi:isolate;}td.num-en,th.num-en{display:table-cell!important;text-align:right;}</style></head><body><h1>منصة التمكين المجتمعي - سجل الرقابة وتتبّع التغييرات</h1><p class="meta">إجمالي السجلات المعروضة: <span class="num-en">${toEnDigits(String(tbody.children.length))}</span> | تاريخ الطباعة: <span class="num-en">${toEnDigits(todayISO())}</span></p><table><thead><tr><th>#</th><th>التاريخ والوقت</th><th>المنفذ</th><th>نوع الحركة</th><th>القسم</th><th>التفاصيل</th></tr></thead><tbody>${tbody.innerHTML}</tbody></table><script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script></body></html>`;
           const win = window.open('', '_blank', 'width=1050,height=720');
           if (win) { win.document.open(); win.document.write(printHtml); win.document.close(); win.focus(); }
           else { triggerDownload(new Blob([printHtml], { type: 'text/html;charset=utf-8' }), `سجل_الرقابة_${todayISO()}.html`); showToast('تم تحميل ملف الطباعة لفتحه وطباعته'); }
