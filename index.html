@@ -550,6 +550,7 @@
           </div>
 
           <div class="flex items-center justify-end pt-1 border-t border-slate-200/80">
+            <button type="button" id="repSearchBtn" class="app-btn-sm border border-indigo-500 text-indigo-700">بحث</button>
             <button type="button" id="resetReportFiltersBtn" class="app-btn-sm border border-indigo-400 text-indigo-700 hover:border-indigo-600">إعادة ضبط الفلترة</button>
           </div>
         </div>
@@ -673,6 +674,7 @@
           <span class="text-slate-400 font-bold">-</span>
           <input type="number" lang="en" id="benFilterFamilyMax" placeholder="إلى" min="1" class="app-input text-center num-en">
         </div>
+        <button type="button" id="benSearchBtn" class="app-btn min-h-[42px] border border-teal-500 text-teal-700 shrink-0">بحث</button>
         <button type="button" id="resetBenFiltersBtn" class="app-btn min-h-[42px] border border-teal-400 text-teal-700 hover:border-teal-600 shrink-0">إعادة ضبط</button>
       </div>
 
@@ -756,6 +758,7 @@
             <option value="مادية">مساعدات نقدية / مادية</option>
           </select>
         </div>
+        <button type="button" id="aidSearchBtn" class="app-btn min-h-[42px] border border-sky-500 text-sky-700 shrink-0">بحث</button>
         <button type="button" id="resetAidFiltersBtn" class="app-btn min-h-[42px] border border-sky-400 text-sky-700 hover:border-sky-600 shrink-0">إعادة ضبط</button>
       </div>
 
@@ -808,6 +811,7 @@
         <div class="flex-1 min-w-0">
           <input type="text" id="wsSearchInput" placeholder="ابحث باسم التدريب، المدرب، المكان، أو التاريخ..." class="app-input">
         </div>
+        <button type="button" id="wsSearchBtn" class="app-btn min-h-[42px] border border-amber-500 text-amber-700 shrink-0">بحث</button>
         <button type="button" id="resetWsFiltersBtn" class="app-btn min-h-[42px] border border-amber-400 text-amber-700 hover:border-amber-600 shrink-0">إعادة ضبط</button>
       </div>
 
@@ -868,6 +872,7 @@
             <option value="بسيطة / متابعة">بسيطة / متابعة</option>
           </select>
         </div>
+        <button type="button" id="needySearchBtn" class="app-btn min-h-[42px] border border-rose-500 text-rose-700 shrink-0">بحث</button>
         <button type="button" id="resetNeedyFiltersBtn" class="app-btn min-h-[42px] border border-rose-400 text-rose-700 hover:border-rose-600 shrink-0">إعادة ضبط</button>
       </div>
 
@@ -943,6 +948,7 @@
           <option value="متبرع فرد">متبرع فرد</option>
           <option value="شركة / قطاع خاص">شركة / قطاع خاص</option>
         </select>
+        <button type="button" id="donorSearchBtn" class="app-btn min-h-[42px] border border-purple-500 text-purple-700 shrink-0">بحث</button>
         <button type="button" id="resetDonorFiltersBtn" class="app-btn min-h-[42px] border border-purple-400 text-purple-700 hover:border-purple-600 shrink-0">إعادة ضبط</button>
       </div>
 
@@ -1092,8 +1098,9 @@
 
       <!-- Search & Filter Bar for Addons -->
       <div class="bg-white/90 p-3.5 rounded-2xl border border-slate-200/80 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-        <div class="sm:col-span-2">
-          <input type="text" id="addonsSearchInput" placeholder="ابحث باسم المساعدة، المدرب، التخصص، الهاتف، أو الملحقات..." class="app-input">
+        <div class="sm:col-span-2 flex items-center gap-2">
+          <input type="text" id="addonsSearchInput" placeholder="ابحث باسم المساعدة، المدرب، التخصص، الهاتف، أو الملحقات..." class="app-input flex-1">
+          <button type="button" id="addonsSearchBtn" class="app-btn min-h-[42px] border border-indigo-500 text-indigo-700 shrink-0">بحث</button>
         </div>
         <div>
           <select id="addonsTypeFilter" class="app-input">
@@ -1214,6 +1221,7 @@
             <option value="all">كل الأوقات</option>
           </select>
           <input type="text" id="adminActionsSearchInput" placeholder="بحث باسم المدير أو التفاصيل..." class="app-input sm:w-56 text-xs">
+          <button type="button" id="adminActionsSearchBtn" class="app-btn border border-indigo-500 text-indigo-700 shrink-0">بحث</button>
           <button type="button" id="printAdminActionsBtn" class="app-btn border border-slate-300 text-slate-700">طباعة</button>
         </div>
       </div>
@@ -1292,6 +1300,7 @@
       </div>
       <div class="bg-white/90 p-3.5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center gap-2.5 text-xs">
         <input type="text" id="auditSearchInput" placeholder="ابحث باسم المنفذ، رقم الهوية، أو التفاصيل..." class="app-input flex-1">
+        <button type="button" id="auditSearchBtn" class="app-btn min-h-[42px] border border-rose-500 text-rose-700 shrink-0">بحث</button>
         <select id="auditActionFilter" class="app-input sm:w-48 shrink-0">
           <option value="all">كل الحركات</option>
           <option value="إضافة">إضافة</option>
@@ -1672,8 +1681,9 @@
       <div class="p-4 sm:p-5 overflow-y-auto space-y-3 text-xs text-right flex-1">
         <!-- Toolbar: Search + Excel Import/Export -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
-          <div class="flex-1">
-            <input type="text" id="pickerSearchInput" placeholder="ابحث بالاسم أو رقم الهوية أو الهاتف..." class="app-input">
+          <div class="flex-1 flex items-center gap-2">
+            <input type="text" id="pickerSearchInput" placeholder="ابحث بالاسم أو رقم الهوية أو الهاتف..." class="app-input flex-1">
+            <button type="button" id="pickerSearchBtn" class="app-btn border border-emerald-500 text-emerald-700 shrink-0">بحث</button>
           </div>
           <div class="admin-only flex flex-wrap items-center gap-2">
             <button type="button" id="pickerExportExcelBtn" class="app-btn bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300">تصدير إكسل (.xlsx)</button>
@@ -2433,6 +2443,18 @@
           .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]);
       }
 
+      function normAr(str) {
+        if (str === null || str === undefined) return '';
+        return toEnDigits(str)
+          .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+          .replace(/[أإآٱ]/g, 'ا')
+          .replace(/ؤ/g, 'و')
+          .replace(/[ئى]/g, 'ي')
+          .replace(/ة/g, 'ه')
+          .trim()
+          .toLowerCase();
+      }
+
       function escapeHtml(str) {
         if (str === null || str === undefined) return '';
         return toEnDigits(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -2957,13 +2979,13 @@
         const noMsg = document.getElementById('noAdminActionsMsg');
         if (!container || !noMsg) return;
         const timeF = (document.getElementById('adminActionsTimeFilter') && document.getElementById('adminActionsTimeFilter').value) || 'today';
-        const q = toEnDigits((document.getElementById('adminActionsSearchInput') && document.getElementById('adminActionsSearchInput').value) || '').trim().toLowerCase();
+        const q = normAr((document.getElementById('adminActionsSearchInput') && document.getElementById('adminActionsSearchInput').value) || '');
         const todayStr = todayISO();
         const list = state.auditLogs.filter(l => {
           if (l.actorRole !== 'مدير النظام') return false;
           if (timeF === 'today' && (!l.createdAt || !l.createdAt.startsWith(todayStr))) return false;
           if (q) {
-            const m = (l.actorName || '').toLowerCase().includes(q) || (l.summary || '').toLowerCase().includes(q) || (l.entityType || '').toLowerCase().includes(q) || (l.actionType || '').toLowerCase().includes(q);
+            const m = normAr(l.actorName).includes(q) || normAr(l.summary).includes(q) || normAr(l.entityType).includes(q) || normAr(l.actionType).includes(q);
             if (!m) return false;
           }
           return true;
@@ -3487,12 +3509,12 @@
       function renderAuditLogView() {
         const tbody = document.getElementById('auditTableBody');
         const noMsg = document.getElementById('noAuditMsg');
-        const q = toEnDigits(document.getElementById('auditSearchInput').value || '').trim().toLowerCase();
+        const q = normAr(document.getElementById('auditSearchInput').value || '');
         const actFilter = document.getElementById('auditActionFilter').value;
         const list = state.auditLogs.filter(l => {
           if (actFilter !== 'all' && l.actionType !== actFilter) return false;
           if (!q) return true;
-          return (l.actorName || '').toLowerCase().includes(q) || (l.summary || '').toLowerCase().includes(q) || (l.entityId || '').toLowerCase().includes(q);
+          return normAr(l.actorName).includes(q) || normAr(l.summary).includes(q) || normAr(l.entityId).includes(q);
         });
         const pagBar = document.getElementById('auditPaginationBar');
         if (!list.length) {
@@ -3555,11 +3577,11 @@
       }
 
       function getFilteredDonors() {
-        const q = toEnDigits(document.getElementById('donorSearchInput').value || '').trim().toLowerCase();
+        const q = normAr(document.getElementById('donorSearchInput').value || '');
         const typeF = document.getElementById('donorTypeFilter').value;
         return state.donors.filter(d => {
           const matchType = typeF === 'all' || d.type === typeF;
-          const matchQ = !q || (d.name || '').toLowerCase().includes(q) || (d.type || '').toLowerCase().includes(q) || (d.phone || '').toLowerCase().includes(q) || (d.address || '').toLowerCase().includes(q) || (d.notes || '').toLowerCase().includes(q);
+          const matchQ = !q || normAr(d.name).includes(q) || normAr(d.type).includes(q) || normAr(d.phone).includes(q) || normAr(d.address).includes(q) || normAr(d.notes).includes(q);
           return matchType && matchQ;
         });
       }
@@ -3781,7 +3803,7 @@
       }
 
       function renderBeneficiaries() {
-        const search = toEnDigits(document.getElementById('beneficiarySearchInput').value || '').trim().toLowerCase();
+        const search = normAr(document.getElementById('beneficiarySearchInput').value || '');
         const filterHealth = document.getElementById('benFilterHealth').value;
         const filterEdu = document.getElementById('benFilterEdu').value;
         const filterCreator = (document.getElementById('benFilterCreatedBy') && document.getElementById('benFilterCreatedBy').value) || 'all';
@@ -3790,9 +3812,9 @@
         const hasFilter = Boolean(search || filterHealth !== 'all' || filterEdu !== 'all' || !isNaN(minFam) || !isNaN(maxFam));
 
         const filtered = state.beneficiaries.filter(b => {
-          const matchSearch = !search || b.nationalId.toLowerCase().includes(search) || b.fullName.toLowerCase().includes(search) ||
-            (b.phone && b.phone.includes(search)) || (b.address && b.address.toLowerCase().includes(search)) ||
-            (b.healthStatus && b.healthStatus.toLowerCase().includes(search)) || (b.education && b.education.toLowerCase().includes(search));
+          const matchSearch = !search || normAr(b.nationalId).includes(search) || normAr(b.fullName).includes(search) ||
+            (b.phone && normAr(b.phone).includes(search)) || (b.address && normAr(b.address).includes(search)) ||
+            (b.healthStatus && normAr(b.healthStatus).includes(search)) || (b.education && normAr(b.education).includes(search));
           if (!matchSearch) return false;
           if (filterHealth !== 'all') {
             if (filterHealth === 'custom') { if (!b.healthStatus || b.healthStatus === 'سليم') return false; }
@@ -4180,15 +4202,16 @@
       }
 
       function getFilteredAidBatches() {
-        const search = toEnDigits(document.getElementById('aidSearchInput').value || '').trim().toLowerCase();
+        const search = normAr(document.getElementById('aidSearchInput').value || '');
         const typeFilter = document.getElementById('aidTypeFilter').value;
         return getAidBatches().filter(b => {
           const match = !search ||
-            b.description.toLowerCase().includes(search) ||
-            (b.staff && b.staff.toLowerCase().includes(search)) ||
-            (b.date && b.date.includes(search)) ||
-            Array.from(b.recipientIds).some(id => id.includes(search)) ||
-            b.recipientNames.some(n => n && n.toLowerCase().includes(search));
+            normAr(b.description).includes(search) ||
+            (b.aidName && normAr(b.aidName).includes(search)) ||
+            (b.staff && normAr(b.staff).includes(search)) ||
+            (b.date && normAr(b.date).includes(search)) ||
+            Array.from(b.recipientIds).some(id => normAr(id).includes(search)) ||
+            b.recipientNames.some(n => n && normAr(n).includes(search));
           if (!match) return false;
           if (typeFilter !== 'all' && b.type !== typeFilter) return false;
           return true;
@@ -4503,14 +4526,14 @@
       }
 
       function getFilteredWorkshops() {
-        const search = toEnDigits(document.getElementById('wsSearchInput').value || '').trim().toLowerCase();
+        const search = normAr(document.getElementById('wsSearchInput').value || '');
         return state.workshops.filter(w => {
           return !search ||
-            (w.title && w.title.toLowerCase().includes(search)) ||
-            (w.trainer && w.trainer.toLowerCase().includes(search)) ||
-            (w.location && w.location.toLowerCase().includes(search)) ||
-            (w.date && w.date.includes(search)) ||
-            (Array.isArray(w.attendeeIds) && w.attendeeIds.some(id => id.includes(search)));
+            (w.title && normAr(w.title).includes(search)) ||
+            (w.trainer && normAr(w.trainer).includes(search)) ||
+            (w.location && normAr(w.location).includes(search)) ||
+            (w.date && normAr(w.date).includes(search)) ||
+            (Array.isArray(w.attendeeIds) && w.attendeeIds.some(id => normAr(id).includes(search)));
         }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
       }
 
@@ -4719,11 +4742,11 @@
       }
 
       function getPickerFilteredList() {
-        const q = toEnDigits(document.getElementById('pickerSearchInput').value || '').trim().toLowerCase();
+        const q = normAr(document.getElementById('pickerSearchInput').value || '');
         const existingNeedyIds = state.pickerTarget === 'needy' ? new Set(state.needyFamilies.map(n => n.nationalId)) : null;
         return state.beneficiaries.filter(b => {
           if (existingNeedyIds && existingNeedyIds.has(b.nationalId)) return false;
-          return !q || b.fullName.toLowerCase().includes(q) || b.nationalId.includes(q) || (b.phone && b.phone.includes(q));
+          return !q || normAr(b.fullName).includes(q) || normAr(b.nationalId).includes(q) || (b.phone && normAr(b.phone).includes(q));
         });
       }
 
@@ -5197,7 +5220,7 @@
         const serviceFilter = document.getElementById('repFilterService').value;
         const donorFilter = (document.getElementById('repDonorFilter') && document.getElementById('repDonorFilter').value) || 'all';
         const minFam = parseInt(document.getElementById('repFamilyMin').value, 10), maxFam = parseInt(document.getElementById('repFamilyMax').value, 10);
-        const customQuery = toEnDigits(document.getElementById('repCustomQuery').value || '').trim().toLowerCase();
+        const customQuery = normAr(document.getElementById('repCustomQuery').value || '');
         const isDateInRange = (d) => (!d ? false : (!dateFrom || d >= dateFrom) && (!dateTo || d <= dateTo));
 
         const contextMatches = state.beneficiaries.filter(b => {
@@ -5205,8 +5228,8 @@
           if (!isNaN(minFam) && fCount < minFam) return false;
           if (!isNaN(maxFam) && fCount > maxFam) return false;
           if (customQuery) {
-            const match = (b.healthStatus && b.healthStatus.toLowerCase().includes(customQuery)) || (b.education && b.education.toLowerCase().includes(customQuery)) ||
-              (b.maritalStatus && b.maritalStatus.toLowerCase().includes(customQuery)) || (b.fullName && b.fullName.toLowerCase().includes(customQuery)) || (b.address && b.address.toLowerCase().includes(customQuery)) || (b.notes && b.notes.toLowerCase().includes(customQuery));
+            const match = normAr(b.healthStatus).includes(customQuery) || normAr(b.education).includes(customQuery) ||
+              normAr(b.maritalStatus).includes(customQuery) || normAr(b.fullName).includes(customQuery) || normAr(b.address).includes(customQuery) || normAr(b.notes).includes(customQuery);
             if (!match) return false;
           }
           return true;
@@ -5489,7 +5512,7 @@
       }
 
       function renderNeedyView() {
-        const search = toEnDigits(document.getElementById('needySearchInput').value || '').trim().toLowerCase();
+        const search = normAr(document.getElementById('needySearchInput').value || '');
         const diffFilter = document.getElementById('needyDifficultyFilter').value;
 
         const items = state.needyFamilies
@@ -5501,11 +5524,11 @@
             if (!item) return false;
             const b = item.b;
             const matchSearch = !search ||
-              b.nationalId.includes(search) ||
-              b.fullName.toLowerCase().includes(search) ||
-              (b.phone && b.phone.includes(search)) ||
-              (b.address && b.address.toLowerCase().includes(search)) ||
-              (b.healthStatus && b.healthStatus.toLowerCase().includes(search));
+              normAr(b.nationalId).includes(search) ||
+              normAr(b.fullName).includes(search) ||
+              (b.phone && normAr(b.phone).includes(search)) ||
+              (b.address && normAr(b.address).includes(search)) ||
+              (b.healthStatus && normAr(b.healthStatus).includes(search));
             if (!matchSearch) return false;
             if (diffFilter !== 'all' && item.difficultyLevel !== diffFilter) return false;
             return true;
@@ -5613,12 +5636,12 @@
       }
 
       function renderAddons() {
-        const search = toEnDigits(document.getElementById('addonsSearchInput').value || '').trim().toLowerCase();
+        const search = normAr(document.getElementById('addonsSearchInput').value || '');
         const typeFilter = document.getElementById('addonsTypeFilter').value;
 
         // Render Aid Templates
         const tpls = state.aidTemplates.filter(t => {
-          const match = !search || t.name.toLowerCase().includes(search) || (t.notes && t.notes.toLowerCase().includes(search)) || (t.amount && t.amount.toLowerCase().includes(search));
+          const match = !search || normAr(t.name).includes(search) || normAr(t.notes).includes(search) || normAr(t.amount).includes(search);
           if (!match) return false;
           if (typeFilter !== 'all' && t.type !== typeFilter) return false;
           return true;
@@ -5644,7 +5667,7 @@
         }
 
         // Render Trainers
-        const trns = state.trainers.filter(tr => !search || tr.name.toLowerCase().includes(search) || (tr.specialty && tr.specialty.toLowerCase().includes(search)) || (tr.phone && tr.phone.includes(search)) || (tr.notes && tr.notes.toLowerCase().includes(search)));
+        const trns = state.trainers.filter(tr => !search || normAr(tr.name).includes(search) || normAr(tr.specialty).includes(search) || normAr(tr.phone).includes(search) || normAr(tr.notes).includes(search));
         const trnBody = document.getElementById('addonsTrainersTableBody'), noTrn = document.getElementById('noAddonsTrainersMsg');
         if (trns.length === 0) { trnBody.innerHTML = ''; noTrn.classList.remove('hidden'); }
         else {
@@ -5669,7 +5692,7 @@
         Object.keys(LOOKUP_CAT_LABELS).forEach(cat => {
           if (lkpCat !== 'all' && lkpCat !== cat) return;
           (state.customLookups[cat] || []).forEach((val, idx) => {
-            if (!search || val.toLowerCase().includes(search) || LOOKUP_CAT_LABELS[cat].toLowerCase().includes(search)) {
+            if (!search || normAr(val).includes(search) || normAr(LOOKUP_CAT_LABELS[cat]).includes(search)) {
               lkpRows.push({ cat, label: LOOKUP_CAT_LABELS[cat], val, idx });
             }
           });
@@ -6171,7 +6194,8 @@
             showToast('تم تنزيل نسخة جاهزة للطباعة');
           }
         });
-        document.getElementById('addonsSearchInput').addEventListener('input', renderAddons);
+        document.getElementById('addonsSearchBtn').addEventListener('click', renderAddons);
+        document.getElementById('addonsSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderAddons(); } });
         document.getElementById('addonsTypeFilter').addEventListener('change', renderAddons);
         document.getElementById('aidTemplateQuickSelect').addEventListener('change', (e) => {
           const val = (e.target.value || '').trim().toLowerCase();
@@ -6360,7 +6384,8 @@
 
         document.getElementById('approvalsStatusFilter').addEventListener('change', renderApprovalsView);
         document.getElementById('adminActionsTimeFilter').addEventListener('change', () => { state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); });
-        document.getElementById('adminActionsSearchInput').addEventListener('input', () => { state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); });
+        document.getElementById('adminActionsSearchBtn').addEventListener('click', () => { state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); });
+        document.getElementById('adminActionsSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); state.adminActionsCurrentPage = 1; renderAdminActionsReportView(); } });
         document.getElementById('adminActionsPrevPageBtn').addEventListener('click', () => { if (state.adminActionsCurrentPage > 1) { state.adminActionsCurrentPage--; renderAdminActionsReportView(); } });
         document.getElementById('adminActionsNextPageBtn').addEventListener('click', () => { state.adminActionsCurrentPage++; renderAdminActionsReportView(); });
         document.getElementById('myReqStatusFilter').addEventListener('change', renderMyRequestsView);
@@ -6373,7 +6398,8 @@
           closeModal('empNoteCloseConfirmModal');
           closeModal('empNoteModal');
         });
-        document.getElementById('auditSearchInput').addEventListener('input', () => { state.auditCurrentPage = 1; renderAuditLogView(); });
+        document.getElementById('auditSearchBtn').addEventListener('click', () => { state.auditCurrentPage = 1; renderAuditLogView(); });
+        document.getElementById('auditSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); state.auditCurrentPage = 1; renderAuditLogView(); } });
         document.getElementById('auditActionFilter').addEventListener('change', () => { state.auditCurrentPage = 1; renderAuditLogView(); });
         document.getElementById('auditPrevPageBtn').addEventListener('click', () => { if (state.auditCurrentPage > 1) { state.auditCurrentPage--; renderAuditLogView(); } });
         document.getElementById('auditNextPageBtn').addEventListener('click', () => { state.auditCurrentPage++; renderAuditLogView(); });
@@ -6491,7 +6517,8 @@
         document.getElementById('benNextPageBtn').addEventListener('click', () => {
           state.benCurrentPage++; renderBeneficiaries();
         });
-        ['beneficiarySearchInput', 'benFilterFamilyMin', 'benFilterFamilyMax'].forEach(id => document.getElementById(id).addEventListener('input', () => { state.benCurrentPage = 1; renderBeneficiaries(); }));
+        document.getElementById('benSearchBtn').addEventListener('click', () => { state.benCurrentPage = 1; renderBeneficiaries(); });
+        ['beneficiarySearchInput', 'benFilterFamilyMin', 'benFilterFamilyMax'].forEach(id => document.getElementById(id).addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); state.benCurrentPage = 1; renderBeneficiaries(); } }));
         ['benFilterHealth', 'benFilterEdu'].forEach(id => document.getElementById(id).addEventListener('change', () => { state.benCurrentPage = 1; renderBeneficiaries(); }));
         document.getElementById('resetBenFiltersBtn').addEventListener('click', () => {
           document.getElementById('beneficiarySearchInput').value = '';
@@ -6591,7 +6618,8 @@
         document.getElementById('needyViewTableBtn').addEventListener('click', () => setNeedyViewMode('table'));
         document.getElementById('needyViewCardsBtn').addEventListener('click', () => setNeedyViewMode('cards'));
         document.getElementById('needyOpenPickerBtn').addEventListener('click', () => openNamesPicker('needy'));
-        document.getElementById('needySearchInput').addEventListener('input', renderNeedyView);
+        document.getElementById('needySearchBtn').addEventListener('click', renderNeedyView);
+        document.getElementById('needySearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderNeedyView(); } });
         document.getElementById('needyDifficultyFilter').addEventListener('change', renderNeedyView);
         document.getElementById('needyTableBody').addEventListener('change', (e) => {
           const sel = e.target.closest('[data-needy-diff-id]');
@@ -6873,7 +6901,8 @@
         // Aid
         document.getElementById('aidViewTableBtn').addEventListener('click', () => setAidViewMode('table'));
         document.getElementById('aidViewCardsBtn').addEventListener('click', () => setAidViewMode('cards'));
-        document.getElementById('aidSearchInput').addEventListener('input', renderAidView);
+        document.getElementById('aidSearchBtn').addEventListener('click', renderAidView);
+        document.getElementById('aidSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderAidView(); } });
         document.getElementById('aidTypeFilter').addEventListener('change', renderAidView);
         document.getElementById('aidForm').addEventListener('submit', saveAid);
         document.getElementById('aidOpenPickerBtn').addEventListener('click', () => openNamesPicker('aid'));
@@ -6903,7 +6932,8 @@
         // Donors
         document.getElementById('addDonorBtn').addEventListener('click', () => openDonorModal());
         document.getElementById('donorForm').addEventListener('submit', saveDonor);
-        document.getElementById('donorSearchInput').addEventListener('input', renderDonorsView);
+        document.getElementById('donorSearchBtn').addEventListener('click', renderDonorsView);
+        document.getElementById('donorSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderDonorsView(); } });
         document.getElementById('donorTypeFilter').addEventListener('change', renderDonorsView);
         document.getElementById('donorViewTableBtn').addEventListener('click', () => setDonorsViewMode('table'));
         document.getElementById('donorViewCardsBtn').addEventListener('click', () => setDonorsViewMode('cards'));
@@ -6971,7 +7001,8 @@
         });
 
         // Workshops
-        document.getElementById('wsSearchInput').addEventListener('input', renderWorkshops);
+        document.getElementById('wsSearchBtn').addEventListener('click', renderWorkshops);
+        document.getElementById('wsSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderWorkshops(); } });
         document.getElementById('wsViewTableBtn').addEventListener('click', () => setWorkshopViewMode('table'));
         document.getElementById('wsViewCardsBtn').addEventListener('click', () => setWorkshopViewMode('cards'));
         document.getElementById('wsOpenPickerBtn').addEventListener('click', () => openNamesPicker('workshop'));
@@ -7005,7 +7036,8 @@
         });
 
         // Shared Names Picker Card Events
-        document.getElementById('pickerSearchInput').addEventListener('input', renderPickerTable);
+        document.getElementById('pickerSearchBtn').addEventListener('click', renderPickerTable);
+        document.getElementById('pickerSearchInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); renderPickerTable(); } });
         document.getElementById('pickerToggleImportBtn').addEventListener('click', () => document.getElementById('pickerImportBox').classList.toggle('hidden'));
         document.getElementById('pickerChooseFileBtn').addEventListener('click', () => document.getElementById('pickerExcelFileInput').click());
         document.getElementById('pickerExcelFileInput').addEventListener('change', async (e) => {
@@ -7135,7 +7167,8 @@
         });
         ['repDateFrom', 'repDateTo'].forEach(id => document.getElementById(id).addEventListener('change', runAdvancedReport));
         document.getElementById('repFilterService').addEventListener('change', (e) => { highlightReportCard(e.target.value); runAdvancedReport(); });
-        ['repFamilyMin', 'repFamilyMax', 'repCustomQuery'].forEach(id => document.getElementById(id).addEventListener('input', runAdvancedReport));
+        document.getElementById('repSearchBtn').addEventListener('click', () => runAdvancedReport());
+        ['repFamilyMin', 'repFamilyMax', 'repCustomQuery'].forEach(id => document.getElementById(id).addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runAdvancedReport(); } }));
         document.getElementById('resetReportFiltersBtn').addEventListener('click', () => {
           document.getElementById('repDateFrom').value = '';
           document.getElementById('repDateTo').value = '';
