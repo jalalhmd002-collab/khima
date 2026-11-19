@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة التمكين المجتمعي - إدارة الجمعية الخيرية</title>
+  <title>التمكين المجتمعي - أبو حازم</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -1363,7 +1363,7 @@
 
 
   <!-- Fixed Bottom Navigation Bar (Employee & Admin) -->
-  <nav id="employeeBottomNav" class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 py-1.5 no-print">
+  <nav id="employeeBottomNav" class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 py-1.5 no-print">
     <div class="max-w-7xl mx-auto grid grid-cols-4 gap-1.5 text-xs">
       <button type="button" data-tab="beneficiaries" id="nav-emp-bottom-beneficiaries" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المسجلين</button>
       <button type="button" data-tab="aid" id="nav-emp-bottom-aid" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المساعدات</button>
@@ -2981,7 +2981,7 @@
         document.querySelectorAll('.employee-only').forEach(el => {
           el.classList.toggle('hidden', isAdmin);
         });
-        document.body.classList.add('pb-24');
+        document.body.classList.add('pb-24', 'md:pb-6');
         updatePendingBadges();
       }
 
