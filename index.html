@@ -1343,17 +1343,13 @@
 
 
 
-  <!-- Employee Fixed Bottom Navigation Bar -->
-  <nav id="employeeBottomNav" class="employee-only hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-1.5 py-1.5 no-print">
-    <div class="max-w-7xl mx-auto grid grid-cols-4 sm:grid-cols-8 gap-1 text-[11px]">
-      <button type="button" data-tab="dashboard" id="nav-emp-bottom-dashboard" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-emerald-700 border-t-2 border-emerald-600 truncate">الرئيسية</button>
-      <button type="button" data-tab="beneficiaries" id="nav-emp-bottom-beneficiaries" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المسجلين</button>
-      <button type="button" data-tab="aid" id="nav-emp-bottom-aid" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المساعدات</button>
-      <button type="button" data-tab="workshops" id="nav-emp-bottom-workshops" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">التدريب</button>
-      <button type="button" data-tab="needy" id="nav-emp-bottom-needy" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">الحالات</button>
-      <button type="button" data-tab="donors" id="nav-emp-bottom-donors" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المانحين</button>
-      <button type="button" data-tab="my-requests" id="nav-emp-bottom-my-requests" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-sky-700 border-t-2 border-transparent truncate">طلباتي</button>
-      <button type="button" data-tab="sync" id="nav-emp-bottom-sync" class="emp-bottom-nav-btn py-2 px-1 rounded-xl text-center text-violet-700 border-t-2 border-transparent truncate">البيانات</button>
+  <!-- Fixed Bottom Navigation Bar (Employee & Admin) -->
+  <nav id="employeeBottomNav" class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 py-1.5 no-print">
+    <div class="max-w-7xl mx-auto grid grid-cols-4 gap-1.5 text-xs">
+      <button type="button" data-tab="beneficiaries" id="nav-emp-bottom-beneficiaries" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المسجلين</button>
+      <button type="button" data-tab="aid" id="nav-emp-bottom-aid" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">المساعدات</button>
+      <button type="button" data-tab="workshops" id="nav-emp-bottom-workshops" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">التدريب</button>
+      <button type="button" data-tab="needy" id="nav-emp-bottom-needy" class="emp-bottom-nav-btn py-2.5 px-2 rounded-xl text-center text-slate-600 border-t-2 border-transparent truncate">الحالات</button>
     </div>
   </nav>
 
@@ -2901,7 +2897,7 @@
         document.querySelectorAll('.employee-only').forEach(el => {
           el.classList.toggle('hidden', isAdmin);
         });
-        document.body.classList.toggle('pb-24', !isAdmin);
+        document.body.classList.add('pb-24');
         updatePendingBadges();
       }
 
