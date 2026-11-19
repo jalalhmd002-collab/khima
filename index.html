@@ -6,6 +6,7 @@
   <title>منصة التمكين المجتمعي - إدارة الجمعية الخيرية</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root, html, body, select, input, textarea { color-scheme: light !important; }
@@ -364,7 +365,10 @@
           <h2 class="text-sm sm:text-base text-slate-900">لوحة التحكم</h2>
           <p class="text-xs text-slate-500">ملخص الإحصائيات والأنشطة الحديثة</p>
         </div>
-        <button type="button" id="printDashboardBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <button type="button" id="openWelcomeModalBtn" class="app-btn border border-emerald-500 text-emerald-700">شاشة الترحيب والموقع</button>
+          <button type="button" id="printDashboardBtn" class="admin-only app-btn border border-slate-300 text-slate-700">طباعة</button>
+        </div>
       </div>
 
       <div id="dashboardPendingAlert" class="hidden admin-only bg-white/95 p-4 rounded-2xl border border-amber-300 border-t-4 border-t-amber-500 shadow-sm flex flex-wrap items-center justify-between gap-3">
@@ -1180,6 +1184,21 @@
           </div>
         </div>
         <div id="noAddonsTrainersMsg" class="hidden p-8 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">لا يوجد مدربون مطابقون.</div>
+      </div>
+
+      <!-- Welcome Message Text Editor in Addons -->
+      <div class="bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 border-t-4 border-t-emerald-500 shadow-sm space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm text-slate-900">نص رسالة شاشة الترحيب</h3>
+            <p class="text-xs text-slate-500">اكتب النص الذي سيظهر في شاشة الترحيب عند فتح البرنامج (مع رابط الموقع في الباركود)</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" id="previewWelcomeFromAddonsBtn" class="app-btn-sm border border-slate-300 text-slate-700">معاينة</button>
+            <button type="button" id="saveWelcomeMsgAddonBtn" class="app-btn-sm border border-emerald-600 text-emerald-700">حفظ النص</button>
+          </div>
+        </div>
+        <textarea id="addonsWelcomeMessageInput" rows="3" placeholder="اكتب رسالة الترحيب هنا..." class="app-input text-xs"></textarea>
       </div>
     </section>
 
@@ -2321,6 +2340,29 @@
     </div>
   </div>
 
+  <!-- 24. Welcome & Site QR Modal -->
+  <div id="welcomeModal" class="fixed inset-0 z-[9998] flex items-center justify-center p-4 hidden modal-backdrop" data-modal="welcomeModal">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fadeIn border border-slate-200 border-t-4 border-t-emerald-600">
+      <div class="bg-slate-50/90 px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="text-base text-slate-900">أهلاً بكم في منصة التمكين المجتمعي</h3>
+        <button type="button" data-close-modal="welcomeModal" class="text-slate-400 hover:text-slate-700 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-5 space-y-4 text-center text-xs">
+        <p id="welcomeMessageText" class="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap"></p>
+        <div class="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 flex flex-col items-center justify-center gap-2.5">
+          <span class="text-xs text-emerald-900">امسح الباركود لفتح رابط الموقع الإلكتروني</span>
+          <div id="welcomeQrContainer" class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs inline-flex items-center justify-center min-h-[156px] min-w-[156px]"></div>
+          <a id="welcomeSiteUrlLink" href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] text-emerald-700 hover:underline break-all num-en"></a>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end">
+        <button type="button" data-close-modal="welcomeModal" class="app-btn border border-emerald-500 text-emerald-700">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 10. Toast -->
   <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[10001] hidden bg-white text-slate-900 border border-slate-200 border-t-4 border-t-emerald-600 text-xs px-4 py-2.5 rounded-2xl shadow-xl transition duration-300 flex items-center gap-2">
     <span id="toastIcon">✓</span>
@@ -2740,6 +2782,40 @@
       function mapBeneficiaryToDb(b) { return b; }
 
       // ---------- Modals ----------
+
+      const WELCOME_CONFIG = {
+        message: 'مرحباً بكم في منصة التمكين المجتمعي لإدارة المساعدات والتدريب والحالات الميدانية.',
+        siteUrl: 'https://jalalhmd002-collab.github.io/khima/'
+      };
+
+      function openWelcomeModal() {
+        const msgEl = document.getElementById('welcomeMessageText');
+        const qrEl = document.getElementById('welcomeQrContainer');
+        const urlEl = document.getElementById('welcomeSiteUrlLink');
+        if (msgEl) msgEl.textContent = (state.customLookups && state.customLookups.welcomeMessage) ? state.customLookups.welcomeMessage : WELCOME_CONFIG.message;
+        const targetUrl = WELCOME_CONFIG.siteUrl || window.location.href;
+        if (urlEl) { urlEl.textContent = targetUrl; urlEl.href = targetUrl; }
+        if (qrEl) {
+          qrEl.innerHTML = '';
+          if (typeof window.QRCode !== 'undefined') {
+            try {
+              new window.QRCode(qrEl, {
+                text: targetUrl,
+                width: 144,
+                height: 144,
+                colorDark: '#0f172a',
+                colorLight: '#ffffff',
+                correctLevel: window.QRCode.CorrectLevel.M
+              });
+            } catch (e) {
+              qrEl.innerHTML = '<span class="text-xs text-slate-500">تعذر توليد الباركود</span>';
+            }
+          } else {
+            qrEl.innerHTML = '<span class="text-xs text-slate-500">الباركود متاح عند توفر الاتصال</span>';
+          }
+        }
+        openModal('welcomeModal');
+      }
 
       function openModal(id) {
         const el = document.getElementById(id);
@@ -5408,7 +5484,7 @@
             if (Array.isArray(imported.pendingRequests)) { const s = new Set(state.pendingRequests.map(r => r.id)); imported.pendingRequests.forEach(r => { if (r.id && !s.has(r.id)) { state.pendingRequests.push(r); s.add(r.id); } }); }
             if (Array.isArray(imported.auditLogs)) { const s = new Set(state.auditLogs.map(l => l.id)); imported.auditLogs.forEach(l => { if (l.id && !s.has(l.id)) { state.auditLogs.push(l); s.add(l.id); } }); }
             if (Array.isArray(imported.usersList)) { const s = new Set(state.usersList.map(u => u.id)); imported.usersList.forEach(u => { if (u.id && !s.has(u.id)) { state.usersList.push(u); s.add(u.id); } }); }
-            if (imported.customLookups && typeof imported.customLookups === 'object') { Object.keys(DEFAULT_LOOKUPS).forEach(k => { if (Array.isArray(imported.customLookups[k])) state.customLookups[k] = imported.customLookups[k]; }); syncAllDynamicDropdowns(); }
+            if (imported.customLookups && typeof imported.customLookups === 'object') { Object.keys(DEFAULT_LOOKUPS).forEach(k => { if (Array.isArray(imported.customLookups[k])) state.customLookups[k] = imported.customLookups[k]; }); if (typeof imported.customLookups.welcomeMessage === 'string') state.customLookups.welcomeMessage = imported.customLookups.welcomeMessage; syncAllDynamicDropdowns(); }
             persistAll(); refreshAllViews();
             showToast(`تم الدمج بنجاح: إضافة ${added} وتحديث ${updated} مستفيد.`);
           } catch (err) { showToast('حدث خطأ أثناء قراءة الملف', false); }
@@ -5657,6 +5733,10 @@
       }
 
       function renderAddons() {
+        const wmInp = document.getElementById('addonsWelcomeMessageInput');
+        if (wmInp && document.activeElement !== wmInp) {
+          wmInp.value = (state.customLookups && state.customLookups.welcomeMessage !== undefined) ? state.customLookups.welcomeMessage : WELCOME_CONFIG.message;
+        }
         const search = normAr(document.getElementById('addonsSearchInput').value || '');
         const typeFilter = document.getElementById('addonsTypeFilter').value;
 
@@ -5938,7 +6018,7 @@
           }
           const closeBtn = e.target.closest('[data-close-modal]');
           if (closeBtn) { closeModal(closeBtn.dataset.closeModal); return; }
-          if (e.target.classList.contains('modal-backdrop') && e.target.dataset.modal === 'customSelectModal') { closeModal('customSelectModal'); return; }
+          if (e.target.classList.contains('modal-backdrop') && (e.target.dataset.modal === 'customSelectModal' || e.target.dataset.modal === 'welcomeModal')) { closeModal(e.target.dataset.modal); return; }
 
           const repCard = e.target.closest('[data-rep-card]');
           if (repCard) {
@@ -6200,6 +6280,19 @@
         });
         document.getElementById('addonsAddAidBtn').addEventListener('click', () => openAidTemplateModal());
         document.getElementById('addonsAddTrainerBtn').addEventListener('click', () => openTrainerModal());
+        document.getElementById('saveWelcomeMsgAddonBtn').addEventListener('click', () => {
+          const val = document.getElementById('addonsWelcomeMessageInput').value.trim();
+          if (!state.customLookups || typeof state.customLookups !== 'object') state.customLookups = {};
+          state.customLookups.welcomeMessage = val || WELCOME_CONFIG.message;
+          persistAll();
+          showToast('تم حفظ نص رسالة الترحيب بنجاح');
+        });
+        document.getElementById('previewWelcomeFromAddonsBtn').addEventListener('click', () => {
+          const val = document.getElementById('addonsWelcomeMessageInput').value.trim();
+          if (!state.customLookups || typeof state.customLookups !== 'object') state.customLookups = {};
+          if (val) state.customLookups.welcomeMessage = val;
+          openWelcomeModal();
+        });
         document.getElementById('addonsPrintBtn').addEventListener('click', () => {
           const secId = state.addonsSubTab === 'aid' ? 'addonsAidSection' : state.addonsSubTab === 'trainers' ? 'addonsTrainersSection' : 'addonsLookupsSection';
           const secEl = document.getElementById(secId);
@@ -6992,6 +7085,8 @@
           else { triggerDownload(new Blob([printHtml], { type: 'text/html;charset=utf-8' }), `${title}_${todayISO()}.html`); showToast('تم تحميل ملف الطباعة لفتحه وطباعته'); }
         });
 
+        document.getElementById('openWelcomeModalBtn').addEventListener('click', openWelcomeModal);
+
         document.getElementById('printDashboardBtn').addEventListener('click', () => {
           const dashEl = document.getElementById('tab-dashboard');
           if (!dashEl) return;
@@ -7275,6 +7370,7 @@
           }
         }
         await completeUserLogin(getDefaultEmployeeUser());
+        openWelcomeModal();
       });
     })();
   </script>
