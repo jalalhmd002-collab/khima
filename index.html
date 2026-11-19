@@ -2354,7 +2354,7 @@
         <div class="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/40 flex flex-col items-center justify-center gap-2.5">
           <span class="text-xs text-emerald-900">امسح الباركود لفتح رابط الموقع الإلكتروني</span>
           <div id="welcomeQrContainer" class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs inline-flex items-center justify-center min-h-[156px] min-w-[156px]"></div>
-          <a id="welcomeSiteUrlLink" href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] text-emerald-700 hover:underline break-all num-en"></a>
+          <span id="welcomeSiteUrlLink" class="text-[11px] text-slate-600 break-all num-en select-all"></span>
         </div>
       </div>
       <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end">
@@ -2788,13 +2788,16 @@
         siteUrl: 'https://jalalhmd002-collab.github.io/khima/'
       };
 
+      let welcomeAutoCloseTimer = null;
+
       function openWelcomeModal() {
+        if (welcomeAutoCloseTimer) { clearTimeout(welcomeAutoCloseTimer); welcomeAutoCloseTimer = null; }
         const msgEl = document.getElementById('welcomeMessageText');
         const qrEl = document.getElementById('welcomeQrContainer');
         const urlEl = document.getElementById('welcomeSiteUrlLink');
         if (msgEl) msgEl.textContent = (state.customLookups && state.customLookups.welcomeMessage) ? state.customLookups.welcomeMessage : WELCOME_CONFIG.message;
         const targetUrl = WELCOME_CONFIG.siteUrl || window.location.href;
-        if (urlEl) { urlEl.textContent = targetUrl; urlEl.href = targetUrl; }
+        if (urlEl) { urlEl.textContent = targetUrl; }
         if (qrEl) {
           qrEl.innerHTML = '';
           if (typeof window.QRCode !== 'undefined') {
@@ -2815,6 +2818,10 @@
           }
         }
         openModal('welcomeModal');
+        welcomeAutoCloseTimer = setTimeout(() => {
+          welcomeAutoCloseTimer = null;
+          closeModal('welcomeModal');
+        }, 30000);
       }
 
       function openModal(id) {
@@ -2838,6 +2845,7 @@
         if (id === 'aidViewModal') state.viewingAidId = null;
         if (id === 'workshopViewModal') state.viewingWorkshopId = null;
         if (id === 'bulkImportModal') state.parsedBulkRows = [];
+        if (id === 'welcomeModal' && welcomeAutoCloseTimer) { clearTimeout(welcomeAutoCloseTimer); welcomeAutoCloseTimer = null; }
       }
       function openExportConfirmModal(title, msg, onConfirm) {
         document.getElementById('confirmExportTitle').textContent = title || 'تأكيد تصدير البيانات';
@@ -7366,6 +7374,7 @@
           const latestUser = state.usersList.find(u => u.id === savedSession.id);
           if (!latestUser || latestUser.isActive !== false) {
             await completeUserLogin(latestUser || savedSession);
+            openWelcomeModal();
             return;
           }
         }
