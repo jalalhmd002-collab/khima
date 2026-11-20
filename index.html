@@ -1079,6 +1079,24 @@
       </div>
     </div>
 
+    <div id="exitConfirmModal" class="hidden fixed inset-0 z-[10030] modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="exitConfirmTitle">
+      <div class="w-full max-w-sm bg-white rounded-2xl border border-amber-200 border-t-4 border-t-emerald-600 shadow-2xl p-5 space-y-4 animate-fadeIn">
+        <div class="flex items-start gap-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H9m4 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </div>
+          <div>
+            <h2 id="exitConfirmTitle" class="text-base text-slate-900">تأكيد الخروج</h2>
+            <p class="text-xs text-slate-600 mt-1">هل تريد الخروج من البرنامج؟ يمكنك الإلغاء للعودة ومتابعة العمل.</p>
+          </div>
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row gap-2 sm:justify-end pt-1">
+          <button type="button" id="cancelExitBtn" class="app-btn border border-slate-300 text-slate-700">إلغاء</button>
+          <button type="button" id="confirmExitBtn" class="app-btn border border-emerald-600 text-emerald-700">موافق، خروج</button>
+        </div>
+      </div>
+    </div>
+
     <!-- TAB: ADDONS & EXTENSIONS -->
     <section id="tab-addons" class="tab-content hidden space-y-4">
 
@@ -7423,6 +7441,22 @@
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       window.addEventListener('DOMContentLoaded', async () => {
         window.scrollTo(0, 0);
+        const backGuardState = { appBackGuard: true };
+        const showExitConfirmationOnBack = () => {
+          history.pushState(backGuardState, '', location.href);
+          openModal('exitConfirmModal');
+        };
+        history.pushState(backGuardState, '', location.href);
+        window.addEventListener('popstate', showExitConfirmationOnBack);
+        document.getElementById('cancelExitBtn').addEventListener('click', () => closeModal('exitConfirmModal'));
+        document.getElementById('exitConfirmModal').addEventListener('click', event => {
+          if (event.target === event.currentTarget) closeModal('exitConfirmModal');
+        });
+        document.getElementById('confirmExitBtn').addEventListener('click', () => {
+          closeModal('exitConfirmModal');
+          window.removeEventListener('popstate', showExitConfirmationOnBack);
+          history.go(-2);
+        });
         await loadStateFromIndexedDB();
         syncAllDynamicDropdowns();
         syncCreatorFilterDropdown();
