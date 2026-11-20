@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root, html, body, select, input, textarea { color-scheme: light !important; }
+    html, body { overscroll-behavior-y: none; }
+    body { touch-action: pan-x pan-y; }
     * { font-family: 'Cairo', sans-serif; font-variant-numeric: lining-nums tabular-nums; }
     .num-en, input[type="number" lang="en"], input[type="date" lang="en"], input[type="tel" lang="en"] {
       font-family: 'Inter', 'Cairo', sans-serif;
@@ -62,6 +64,11 @@
       min-height: 32px; padding: 0.35rem 0.75rem; border-radius: 0.625rem; font-size: 0.75rem; font-weight: 400;
       display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
       transition: all 0.15s ease-in-out; white-space: nowrap; cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      #tab-sync .admin-only.grid > div:nth-child(1), #tab-sync .admin-only.grid > div:nth-child(4) { grid-column: 2; }
+      #tab-sync .admin-only.grid > div:nth-child(2), #tab-sync .admin-only.grid > div:nth-child(3) { grid-column: 1; }
     }
 
     @media print {
@@ -990,7 +997,7 @@
     <section id="tab-sync" class="tab-content hidden space-y-4">
       <div class="bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-2xl border border-slate-200/80 border-t-4 border-t-violet-500 shadow-sm space-y-5">
         <div>
-          <h2 class="text-base sm:text-lg text-slate-900">تصدير واستيراد الملفات والنسخ الاحتياطي (بدون إنترنت)</h2>
+          <h2 id="backupTitleSecretTrigger" class="text-base sm:text-lg text-slate-900 select-none cursor-default" title="">تصدير واستيراد الملفات والنسخ الاحتياطي (بدون إنترنت)</h2>
           <p class="text-xs text-slate-500">تبادل ملفات الطلبات وتحديثات القاعدة مع الموظفين عبر الواتساب أو البلوتوث، وحفظ النسخ الاحتياطية الأساسية</p>
         </div>
 
@@ -1052,6 +1059,25 @@
         </div>
       </div>
     </section>
+
+    <div id="clearDatabaseWarning" class="hidden fixed inset-0 z-[10020] modal-backdrop flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="clearDatabaseTitle">
+      <div class="w-full max-w-md bg-white rounded-2xl border border-rose-200 border-t-4 border-t-rose-600 shadow-2xl p-5 space-y-4 animate-fadeIn">
+        <div class="flex items-start gap-3">
+          <div class="w-11 h-11 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          </div>
+          <div>
+            <h2 id="clearDatabaseTitle" class="text-base text-rose-800">تحذير: حذف جميع البيانات</h2>
+            <p class="text-xs text-slate-600 mt-1">سيتم حذف جميع السجلات والطلبات وسجل الرقابة والبيانات المحفوظة محلياً نهائياً. لا يمكن التراجع عن هذا الإجراء.</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500">بعد التنظيف ستُعاد تهيئة حسابات الدخول الافتراضية فقط.</p>
+        <div class="flex flex-col-reverse sm:flex-row gap-2 sm:justify-end pt-1">
+          <button type="button" id="cancelClearDatabaseBtn" class="app-btn border border-slate-300 text-slate-700">إلغاء الأمر</button>
+          <button type="button" id="confirmClearDatabaseBtn" class="app-btn border border-rose-600 text-rose-700">موافقة وتأكيد الحذف</button>
+        </div>
+      </div>
+    </div>
 
     <!-- TAB: ADDONS & EXTENSIONS -->
     <section id="tab-addons" class="tab-content hidden space-y-4">
@@ -3051,6 +3077,7 @@
         document.getElementById('loginForm').reset();
         updateRoleUI();
         switchTab('dashboard');
+        window.scrollTo(0, 0);
         refreshAllViews();
         showToast(`مرحباً بك، ${userObj.fullName}`);
       }
@@ -7328,6 +7355,55 @@
         document.getElementById('importBackupBtn').addEventListener('click', () => document.getElementById('importJsonFile').click());
         document.getElementById('importJsonFile').addEventListener('change', importBackup);
 
+        const backupTitleTrigger = document.getElementById('backupTitleSecretTrigger');
+        const clearDatabaseWarning = document.getElementById('clearDatabaseWarning');
+        let backupTitleClickCount = 0;
+        let backupTitleClickTimer = null;
+        const closeClearDatabaseWarning = () => clearDatabaseWarning.classList.add('hidden');
+        backupTitleTrigger.addEventListener('click', () => {
+          if (!state.currentUser || state.currentUser.role !== 'admin') return;
+          backupTitleClickCount += 1;
+          if (backupTitleClickTimer) clearTimeout(backupTitleClickTimer);
+          backupTitleClickTimer = setTimeout(() => { backupTitleClickCount = 0; }, 1800);
+          if (backupTitleClickCount >= 5) {
+            backupTitleClickCount = 0;
+            clearTimeout(backupTitleClickTimer);
+            clearDatabaseWarning.classList.remove('hidden');
+            document.getElementById('cancelClearDatabaseBtn').focus();
+          }
+        });
+        document.getElementById('cancelClearDatabaseBtn').addEventListener('click', closeClearDatabaseWarning);
+        clearDatabaseWarning.addEventListener('click', (event) => {
+          if (event.target === clearDatabaseWarning) closeClearDatabaseWarning();
+        });
+        document.getElementById('confirmClearDatabaseBtn').addEventListener('click', async (event) => {
+          const confirmBtn = event.currentTarget;
+          if (!state.currentUser || state.currentUser.role !== 'admin') {
+            closeClearDatabaseWarning();
+            showToast('هذا الإجراء متاح لمدير النظام فقط', false);
+            return;
+          }
+          confirmBtn.disabled = true;
+          confirmBtn.textContent = 'جارٍ تنظيف القاعدة...';
+          try {
+            const db = await openOfflineDB();
+            await new Promise((resolve, reject) => {
+              const tx = db.transaction(['app_data', 'auth_session'], 'readwrite');
+              tx.objectStore('app_data').clear();
+              tx.objectStore('auth_session').clear();
+              tx.oncomplete = resolve;
+              tx.onerror = () => reject(tx.error || new Error('تعذر تنظيف قاعدة البيانات'));
+              tx.onabort = () => reject(tx.error || new Error('أُلغيت عملية تنظيف قاعدة البيانات'));
+            });
+            Object.keys(localStorage).filter(key => key.startsWith(LS_PREFIX)).forEach(key => localStorage.removeItem(key));
+            window.location.reload();
+          } catch (error) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = 'موافقة وتأكيد الحذف';
+            showToast('تعذر تنظيف قاعدة البيانات؛ لم يكتمل الحذف', false);
+          }
+        });
+
       }
 
 
@@ -7344,7 +7420,9 @@
         setReportViewMode(mode === 'cards' ? 'report' : 'table');
       }
 
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       window.addEventListener('DOMContentLoaded', async () => {
+        window.scrollTo(0, 0);
         await loadStateFromIndexedDB();
         syncAllDynamicDropdowns();
         syncCreatorFilterDropdown();
@@ -7370,9 +7448,9 @@
         updateSyncIndicatorUI();
 
         const savedSession = await idbGet('auth_session', 'current_user');
-        if (savedSession && savedSession.id && savedSession.role === 'admin') {
+        if (savedSession && savedSession.id && ['admin', 'employee'].includes(savedSession.role)) {
           const latestUser = state.usersList.find(u => u.id === savedSession.id);
-          if (!latestUser || latestUser.isActive !== false) {
+          if (latestUser ? latestUser.isActive !== false : savedSession.isActive !== false) {
             await completeUserLogin(latestUser || savedSession);
             openWelcomeModal();
             return;
