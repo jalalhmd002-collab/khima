@@ -32,6 +32,7 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .animate-fadeIn { animation: fadeIn 0.18s ease-out forwards; }
+    #benSelectionBar.hidden, #needySelectionBar.hidden { display: none !important; }
 
     .app-input {
       width: 100%;
@@ -4286,6 +4287,7 @@
 
         idsSet.forEach(id => {
           state.selectedBeneficiaryIds.delete(id);
+          state.selectedNeedyIds.delete(id);
           deleteRecordFromCloud('beneficiaries', 'national_id', id);
           deleteRecordFromCloud('needy_families', 'national_id', id);
         });
@@ -4433,6 +4435,13 @@
           const visibleIds = state.needyFamilies.map(n => n.nationalId);
           headerCb.checked = visibleIds.length > 0 && visibleIds.every(id => state.selectedNeedyIds.has(id));
         }
+      }
+
+      function clearPersonSelections() {
+        state.selectedBeneficiaryIds.clear();
+        state.selectedNeedyIds.clear();
+        renderBeneficiaries();
+        renderNeedyView();
       }
 
       function getAidBatchRecipients(a) {
@@ -4619,6 +4628,7 @@
           };
           state.pendingRequests.unshift(req);
           recordAuditLog('إضافة', 'الطلبات المعلقة', description, `ترشيح (${toEnDigits(String(selectedList.length))}) مستفيد لمساعدة (${description}) بانتظار موافقة المدير`);
+          clearPersonSelections();
           persistAll(); closeModal('aidModal'); updatePendingBadges();
           if (state.currentTab === 'my-requests') renderMyRequestsView();
           showToast('تم إرسال طلب الترشيح للمساعدة إلى المدير للمراجعة');
@@ -4649,6 +4659,7 @@
         }
         if (state.role === 'admin') { recordAuditLog(editId === 'new' ? 'إضافة' : 'تعديل', 'المساعدات', description, `${editId === 'new' ? 'تسجيل' : 'تعديل'} مساعدة (${description}) لـ ${selectedList.length} مستفيد`); state.aidRecords.filter(x => x.date === date && x.description === description && x.type === type).forEach(r => syncRecordToCloud('aid_records', { id: r.id, national_id: r.nationalId, beneficiary_name: r.beneficiaryName, beneficiary_phone: r.beneficiaryPhone || '', type: r.type, date: r.date, aid_name: r.aidName, template_id: r.templateId, description: r.description, amount: r.amount, staff: r.staff, donor_id: r.donorId, notes: r.notes, sheet_imgs: r.sheetImgs }, 'id')); }
         ensureAidInAddons(aidName, type, date, amount, notes);
+        clearPersonSelections();
         persistAll(); closeModal('aidModal'); renderAidView(); renderDashboard(); runAdvancedReport();
       }
 
@@ -5689,7 +5700,9 @@
         if (items.length === 0) {
           tbody.innerHTML = ''; cards.innerHTML = '';
           tblWrap.classList.add('hidden'); cards.classList.add('hidden');
-          noMsg.classList.remove('hidden'); return;
+          noMsg.classList.remove('hidden');
+          updateNeedySelectionUI();
+          return;
         }
         noMsg.classList.add('hidden');
 
@@ -5747,6 +5760,7 @@
               </div>`;
           }).join('');
         }
+        updateNeedySelectionUI();
       }
 
       // ---------- Addons (Aid Templates & Trainers) ----------
